@@ -1,9 +1,7 @@
 package db
 
 import (
-
-	//Import clients here when created !!
-
+	"project/client"
 	"project/model"
 
 	"github.com/jinzhu/gorm"
@@ -23,7 +21,6 @@ func init() {
 	DBPass := ""
 	//DBPass := os.Getenv("MVC_DB_PASS")
 	DBHost := ""
-	// ------------------------
 
 	db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")
 
@@ -34,7 +31,8 @@ func init() {
 		log.Info("Connection Established")
 	}
 
-	// Add all clients here when created !!
+	// Add all clients here
+	client.Db = db
 
 }
 
