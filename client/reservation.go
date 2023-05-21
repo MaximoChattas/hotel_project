@@ -5,6 +5,7 @@ import (
 	"project/model"
 )
 
+//Inserts a reservation into db
 func InsertReservation(reservation model.Reservation) model.Reservation {
 
 	result := Db.Create(&reservation)
@@ -17,6 +18,7 @@ func InsertReservation(reservation model.Reservation) model.Reservation {
 	return reservation
 }
 
+//Returns a single reservation by its id
 func GetReservationById(id int) model.Reservation {
 	var reservation model.Reservation
 
@@ -26,6 +28,7 @@ func GetReservationById(id int) model.Reservation {
 	return reservation
 }
 
+//Returns all reservations
 func GetReservations() model.Reservations {
 	var reservations model.Reservations
 	Db.Find(&reservations)
@@ -35,6 +38,7 @@ func GetReservations() model.Reservations {
 	return reservations
 }
 
+//Return all reservations from a specific user
 func GetReservationsByUser(userId int) model.Reservations {
 	var reservations model.Reservations
 
@@ -44,6 +48,7 @@ func GetReservationsByUser(userId int) model.Reservations {
 	return reservations
 }
 
+//Return all reservations in a specific hotel
 func GetReservationsByHotel(hotelId int) model.Reservations {
 	var reservations model.Reservations
 
