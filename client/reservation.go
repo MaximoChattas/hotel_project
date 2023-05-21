@@ -43,3 +43,12 @@ func GetReservationsByUser(userId int) model.Reservations {
 
 	return reservations
 }
+
+func GetReservationsByHotel(hotelId int) model.Reservations {
+	var reservations model.Reservations
+
+	Db.Where("HotelId = ?", hotelId).Find(&reservations)
+	log.Debug("Reservations: ", reservations)
+
+	return reservations
+}
