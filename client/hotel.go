@@ -17,6 +17,9 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 	return hotel
 }
 
+// prueba de push
 func GetHotelById(id int) model.Hotel {}
 
 func GetHotels() model.Hotels {}
+
+func pruebaPush() model.Hotels {}
