@@ -19,8 +19,6 @@ var (
 	Service serviceInterface
 )
 
-var
-
 func init() {
 	Service = &service{}
 }
