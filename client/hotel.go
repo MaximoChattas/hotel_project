@@ -16,3 +16,7 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 	log.Debug("User created:", hotel.Id)
 	return hotel
 }
+
+func GetHotelById(id int) model.Hotel {}
+
+func GetHotels() model.Hotels {}

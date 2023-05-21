@@ -16,3 +16,9 @@ func InsertReservation(reservation model.Reservation) model.Reservation {
 	log.Debug("User created:", reservation.Id)
 	return reservation
 }
+
+func GetReservationById(id int) model.Reservation {}
+
+func GetReservations() model.Reservations {}
+
+func GetUsersReservations(userId int) model.Reservations {}

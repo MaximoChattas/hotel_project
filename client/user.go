@@ -20,3 +20,7 @@ func InsertUser(user model.User) model.User {
 	log.Debug("User created:", user.Id)
 	return user
 }
+
+func GetUserById(id int) model.User {}
+
+func GetUsers() model.Users {}
