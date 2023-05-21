@@ -5,6 +5,7 @@ import (
 	"project/model"
 )
 
+// funcion que permite insertar nuevos hoteles
 func InsertHotel(hotel model.Hotel) model.Hotel {
 
 	result := Db.Create(&hotel)
@@ -13,13 +14,26 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 		log.Error("Failed to insert hotel.")
 	}
 
-	log.Debug("User created:", hotel.Id)
+	log.Debug("Hotel created:", hotel.Id)
 	return hotel
 }
 
-// prueba de push
-func GetHotelById(id int) model.Hotel {}
+// encuentra los hoteles por un ID pasado por parametro
+func GetHotelById(id int) model.Hotel {
+	var hotel model.Hotel
 
-func GetHotels() model.Hotels {}
+	Db.Where("id = ?", id).First(&hotel)
+	log.Debug("Hotel: ", hotel)
 
-func pruebaPush() model.Hotels {}
+	return hotel
+}
+
+// encuentra los hoteles
+func GetHotels() model.Hotels {
+	var hotels model.Hotels
+	Db.Preload("Hotel").Find(&hotels)
+
+	log.Debug("Hotels: ", hotels)
+
+	return hotels
+}
