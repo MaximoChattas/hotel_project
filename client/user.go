@@ -21,6 +21,20 @@ func InsertUser(user model.User) model.User {
 	return user
 }
 
-func GetUserById(id int) model.User {}
+func GetUserById(id int) model.User {
+	var user model.User
 
-func GetUsers() model.Users {}
+	Db.Where("id = ?", id).Preload("Reservation").First(&user)
+	log.Debug("User: ", user)
+
+	return user
+}
+
+func GetUsers() model.Users {
+	var users model.Users
+	Db.Find(&users)
+
+	log.Debug("Users: ", users)
+
+	return users
+}

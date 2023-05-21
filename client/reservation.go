@@ -17,8 +17,38 @@ func InsertReservation(reservation model.Reservation) model.Reservation {
 	return reservation
 }
 
-func GetReservationById(id int) model.Reservation {}
+func GetReservationById(id int) model.Reservation {
+	var reservation model.Reservation
 
-func GetReservations() model.Reservations {}
+	Db.Where("id = ?", id).First(&reservation)
+	log.Debug("Reservation: ", reservation)
 
-func GetUsersReservations(userId int) model.Reservations {}
+	return reservation
+}
+
+func GetReservations() model.Reservations {
+	var reservations model.Reservations
+	Db.Find(&reservations)
+
+	log.Debug("Reservations: ", reservations)
+
+	return reservations
+}
+
+func GetReservationsByUser(userId int) model.Reservations {
+	var reservations model.Reservations
+
+	Db.Where("UserId = ?", userId).Find(&reservations)
+	log.Debug("Reservations: ", reservations)
+
+	return reservations
+}
+
+func GetReservationsByHotel(hotelId int) model.Reservations {
+	var reservations model.Reservations
+
+	Db.Where("HotelId = ?", hotelId).Find(&reservations)
+	log.Debug("Reservations: ", reservations)
+
+	return reservations
+}
