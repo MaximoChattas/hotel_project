@@ -1,0 +1,33 @@
+.hotel-card {
+  display: flex;
+  justify-content: space-between;
+  margin-left:30px ;
+  margin-right:30px;
+}
+.hotel-title{
+  color: white
+}
+.hotel-image{
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+
+
+}
+.Precio{
+  color: white
+}
+
+.hoteles{
+  margin-top: 60px;
+  
+}
+
+.stars {
+  color: gold;
+  font-size: 20px;
+  }
+  
+.star {
+  margin-right: 5px;
+}
