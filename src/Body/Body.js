@@ -15,7 +15,7 @@ function Body() {
           <span className="star">&#9733;</span>
         </div>
         <h2 className="hotel-title">Hotel Perfecta</h2>
-        <h3 className='Precio'>$19.367 por dia</h3>
+        <h3 className='Precio'>$19.369 por dia</h3>
      </div>
       
       <div className="hoteles">
@@ -28,7 +28,7 @@ function Body() {
         <span className="star">&#9733;</span>
        </div>
        <h2 className="hotel-title">Hotel Don</h2> 
-       <h3 className='Precio'>$19.367 por dia</h3>
+       <h3 className='Precio'>$19.369 por dia</h3>
       </div>
 
 
@@ -42,7 +42,7 @@ function Body() {
         <span className="star">&#9733;</span>
       </div>
       <h2 className="hotel-title">Hotel Traicion</h2>
-      <h3 className='Precio'>$19.367 por dia</h3>
+      <h3 className='Precio'>$19.369 por dia</h3>
       </div>
         
         
