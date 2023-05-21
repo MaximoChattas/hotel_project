@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './Header.css';
 import Reservar from '../Componentes/Reservar';
-
+import Login from '../Componentes/Login';
 function Header() {
   const [EstadoReserva, cambiarEstadoReserva]=useState(false);
+  const [EstadoLogin, cambiarEstadoLogin]=useState(false);
   return (
     <header>
           <div className="container">
@@ -26,7 +27,8 @@ function Header() {
 
       <div className="main-header">
         <div className= "contenedorBotones">
-          <button className="boton">Iniciar sesión</button>
+          <button className="boton" >Iniciar sesión</button>
+          
         </div>
       </div>
       </div>
