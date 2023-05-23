@@ -21,8 +21,8 @@ type serviceInterface interface {
 
 	InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error)
 	GetReservations() (dto.ReservationsDto, error)
-	GetReservationsByUser(userId int) (dto.UserReservationsDto, error) //To do
-	GetReservationsByHotel(hotelId int) (dto.ReservationsDto, error)   //To do
+	GetReservationsByUser(userId int) (dto.UserReservationsDto, error)
+	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error) //To do
 
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool //To do
 }
@@ -207,4 +207,34 @@ func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, er
 	userReservationsDto.Reservations = reservationsDto
 
 	return userReservationsDto, nil
+}
+
+func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error) {
+	var hotel model.Hotel = client.GetHotelById(hotelId)
+	var reservations model.Reservations = client.GetReservationsByHotel(hotelId)
+
+	var hotelReservations dto.HotelReservationsDto
+	var reservationsDto dto.ReservationsDto
+
+	hotelReservations.HotelId = hotel.Id
+	hotelReservations.HotelName = hotel.Name
+	hotelReservations.HotelDescription = hotel.Description
+	hotelReservations.HotelRoomAmount = hotel.RoomAmount
+	hotelReservations.HotelStreetName = hotel.StreetName
+	hotelReservations.HotelStreetNumber = hotel.StreetNumber
+
+	for _, reservation := range reservations {
+		var reservationDto dto.ReservationDto
+		reservationDto.Id = reservation.Id
+		reservationDto.StartDate = reservation.StartDate
+		reservationDto.EndDate = reservation.EndDate
+		reservationDto.HotelId = reservation.HotelId
+		reservationDto.UserId = reservation.UserId
+
+		reservationsDto = append(reservationsDto, reservationDto)
+	}
+
+	hotelReservations.Reservations = reservationsDto
+
+	return hotelReservations, nil
 }
