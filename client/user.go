@@ -24,7 +24,7 @@ func InsertUser(user model.User) model.User {
 func GetUserById(id int) model.User {
 	var user model.User
 
-	Db.Where("id = ?", id).Preload("Reservation").First(&user)
+	Db.Where("id = ?", id).First(&user)
 	log.Debug("User: ", user)
 
 	return user
