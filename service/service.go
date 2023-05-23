@@ -83,7 +83,7 @@ func (s *hotelService) GetHotelById(id int) (dto.HotelDto, error) {
 	hotelDto.RoomAmount = hotel.RoomAmount
 	hotelDto.Description = hotel.Description
 	hotelDto.StreetName = hotel.StreetName
-	hotelDto.StreetNumber = hotel.StreetNumberNumber
+	hotelDto.StreetNumber = hotel.StreetNumber
 
 	return hotelDto, nil
 }
