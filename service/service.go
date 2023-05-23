@@ -90,6 +90,59 @@ func (s *service) GetUsers() (dto.UsersDto, error) {
 	return usersDto, nil
 }
 
+func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
+	var hotel model.Hotel
+
+	hotel.Name = hotelDto.Name
+	hotel.Description = hotelDto.Description
+	hotel.RoomAmount = hotelDto.RoomAmount
+
+	hotel = client.InsertHotel(hotel)
+
+	hotelDto.Id = hotel.Id
+
+	return hotelDto, nil
+}
+
+func (s *service) GetHotels() (dto.HotelsDto, error) {
+
+	var hotels model.Hotels = client.GetHotels()
+	var hotelsDto dto.HotelsDto
+
+	for _, hotel := range hotels {
+		var hotelDto dto.HotelDto
+		hotelDto.Id = hotel.Id
+		hotelDto.Name = hotel.Name
+		hotelDto.RoomAmount = hotel.RoomAmount
+		hotelDto.Description = hotel.Description
+
+		hotelDto.StreetName = hotel.StreetName
+		hotelDto.StreetNumber = hotel.StreetNumber
+
+		hotelsDto = append(hotelsDto, hotelDto)
+	}
+
+	return hotelsDto, nil
+}
+
+func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
+
+	var hotel model.Hotel = client.GetHotelById(id)
+	var hotelDto dto.HotelDto
+
+	if hotel.Id == 0 {
+		return hotelDto, errors.New("hotel not found")
+	}
+	hotelDto.Id = hotel.Id
+	hotelDto.Name = hotel.Name
+	hotelDto.RoomAmount = hotel.RoomAmount
+	hotelDto.Description = hotel.Description
+	hotelDto.StreetName = hotel.StreetName
+	hotelDto.StreetNumber = hotel.StreetNumber
+
+	return hotelDto, nil
+}
+
 func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error) {
 	var reservation model.Reservation
 
