@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import "./Login.css"
+
+import "./Login.css";
 
 function Login() {
   // React States
@@ -89,9 +89,7 @@ function Login() {
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
       </div>
     </div>
-    
   );
-
 }
 
 export default Login;
