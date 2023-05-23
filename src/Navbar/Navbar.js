@@ -1,19 +1,21 @@
 import React, {useState} from 'react';
-import './Header.css';
+import './Navbar.css';
+
 import Log from '../Componentes/Log';
 import Reservar from '../Componentes/Reservar';
 import Login  from '../Componentes/Login';
-function Header() {
+
+function Navbar() {
   const [EstadoReserva, cambiarEstadoReserva]=useState(false);
   const [EstadoLogin, CambiarEstadoLogin]=useState(false);
   return (
     <header>
           <div className="container">
 
-      <div className="main-header">
+      <div className="main-navbar">
        <h1 className='mir'>MIRANDA</h1>
       </div>
-      <div className="main-header">
+      <div className="main-navbar">
         <div className= "contenedorBotones">
           <button onClick={()=>cambiarEstadoReserva(!EstadoReserva)} className="boton">Reservar fecha</button>
         </div>
@@ -25,7 +27,7 @@ function Header() {
             <h2>Hasta: </h2>
           </Reservar>
       </div>
-      <div className="main-header">
+      <div className="main-navbar">
         <div className= "contenedorBotones">
           <button onClick={()=>CambiarEstadoLogin(!EstadoLogin)} className="boton">Iniciar sesion</button>
         </div>
@@ -42,4 +44,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Navbar;

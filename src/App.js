@@ -1,6 +1,6 @@
 
 import React from "react";
-import Header from './Header/Header';
+import Header from './Navbar/Navbar';
 import Body from './Body/Body';
 import "./index.css";
 
@@ -8,8 +8,10 @@ import "./index.css";
 function App() {
   return (
     <div>
+      
       <Header /> {}
       <Body/>{}
+      
       <footer>
         {}
       </footer>
