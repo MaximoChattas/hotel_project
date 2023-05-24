@@ -22,7 +22,7 @@ type serviceInterface interface {
 	InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error)
 	GetReservations() (dto.ReservationsDto, error)
 	GetReservationsByUser(userId int) (dto.UserReservationsDto, error)
-	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error) //To do
+	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error)
 
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool //To do
 }
@@ -58,7 +58,7 @@ func (s *service) GetUserById(id int) (dto.UserDto, error) {
 	var userDto dto.UserDto
 
 	if user.Id == 0 {
-		return userDto, errors.New("User not found")
+		return userDto, errors.New("user not found")
 	}
 
 	userDto.Id = user.Id
@@ -144,18 +144,26 @@ func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
 }
 
 func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error) {
-	var reservation model.Reservation
 
-	reservation.StartDate = reservationDto.StartDate
-	reservation.EndDate = reservationDto.EndDate
-	reservation.HotelId = reservationDto.HotelId
-	reservation.UserId = reservationDto.UserId
+	timeStart, _ := time.Parse("02-01-2006 15:04", reservationDto.StartDate)
+	timeEnd, _ := time.Parse("02-01-2006", reservationDto.EndDate)
 
-	reservation = client.InsertReservation(reservation)
+	if s.CheckAvailability(reservationDto.HotelId, timeStart, timeEnd) {
+		var reservation model.Reservation
 
-	reservationDto.Id = reservation.Id
+		reservation.StartDate = reservationDto.StartDate
+		reservation.EndDate = reservationDto.EndDate
+		reservation.HotelId = reservationDto.HotelId
+		reservation.UserId = reservationDto.UserId
 
-	return reservationDto, nil
+		reservation = client.InsertReservation(reservation)
+
+		reservationDto.Id = reservation.Id
+
+		return reservationDto, nil
+	}
+
+	return reservationDto, errors.New("there are no rooms available")
 }
 
 func (s *service) GetReservations() (dto.ReservationsDto, error) {
@@ -237,4 +245,10 @@ func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto,
 	hotelReservations.Reservations = reservationsDto
 
 	return hotelReservations, nil
+}
+
+func (s *service) CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool {
+	//Implement later
+	//Returns true if rooms are available
+	return true
 }
