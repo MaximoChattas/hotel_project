@@ -1,7 +1,6 @@
-*{
-  color:white;
+* {
+  color: white;
 }
-
 
 .Login {
   text-align: center;
@@ -18,7 +17,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-.title{
+.title {
   color: #fff;
 }
 .Login-header {

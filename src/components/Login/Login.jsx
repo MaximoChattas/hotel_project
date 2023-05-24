@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import "./Login.css";
 
 function Login() {
@@ -8,13 +7,13 @@ function Login() {
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   fetch("http://localhost:3000/item.json")
-      .then(res => res.json()).then(
-        (result) => {
-       database=result
-        }, (error) => {
-          
-        }
-      )
+    .then((res) => res.json())
+    .then(
+      (result) => {
+        database = result;
+      },
+      (error) => {}
+    );
   // User Login info
   /* database = [
     {
@@ -29,7 +28,7 @@ function Login() {
 
   const errors = {
     uname: "invalid username",
-    pass: "invalid password"
+    pass: "invalid password",
   };
 
   const handleSubmit = (event) => {
