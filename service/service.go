@@ -147,7 +147,7 @@ func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
 func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error) {
 
 	timeStart, _ := time.Parse("02-01-2006 15:04", reservationDto.StartDate)
-	timeEnd, _ := time.Parse("02-01-2006", reservationDto.EndDate)
+	timeEnd, _ := time.Parse("02-01-2006 15:04", reservationDto.EndDate)
 
 	if timeStart.Before(timeEnd) {
 		return reservationDto, errors.New("a reservation cant end before it starts")
