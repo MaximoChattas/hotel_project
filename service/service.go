@@ -96,6 +96,8 @@ func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
 	hotel.Name = hotelDto.Name
 	hotel.Description = hotelDto.Description
 	hotel.RoomAmount = hotelDto.RoomAmount
+	hotel.StreetName = hotelDto.StreetName
+	hotel.StreetNumber = hotelDto.StreetNumber
 
 	hotel = client.InsertHotel(hotel)
 
@@ -115,7 +117,6 @@ func (s *service) GetHotels() (dto.HotelsDto, error) {
 		hotelDto.Name = hotel.Name
 		hotelDto.RoomAmount = hotel.RoomAmount
 		hotelDto.Description = hotel.Description
-
 		hotelDto.StreetName = hotel.StreetName
 		hotelDto.StreetNumber = hotel.StreetNumber
 
@@ -147,6 +148,10 @@ func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.Rese
 
 	timeStart, _ := time.Parse("02-01-2006 15:04", reservationDto.StartDate)
 	timeEnd, _ := time.Parse("02-01-2006", reservationDto.EndDate)
+
+	if timeStart.Before(timeEnd) {
+		return reservationDto, errors.New("a reservation cant end before it starts")
+	}
 
 	if s.CheckAvailability(reservationDto.HotelId, timeStart, timeEnd) {
 		var reservation model.Reservation
@@ -188,7 +193,7 @@ func (s *service) GetReservations() (dto.ReservationsDto, error) {
 
 func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, error) {
 	var user model.User = client.GetUserById(userId)
-	var userReservations model.Reservations = client.GetReservationsByUser(userId)
+	var reservations model.Reservations = client.GetReservationsByUser(userId)
 
 	var userReservationsDto dto.UserReservationsDto
 	var reservationsDto dto.ReservationsDto
@@ -200,7 +205,7 @@ func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, er
 	userReservationsDto.UserEmail = user.Email
 	userReservationsDto.UserPassword = user.Password
 
-	for _, reservation := range userReservations {
+	for _, reservation := range reservations {
 		var reservationDto dto.ReservationDto
 
 		reservationDto.Id = reservation.Id
@@ -248,7 +253,27 @@ func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto,
 }
 
 func (s *service) CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool {
-	//Implement later
-	//Returns true if rooms are available
+
+	hotel := client.GetHotelById(hotelId)
+	reservations := client.GetReservationsByHotel(hotelId)
+
+	roomsAvailable := hotel.RoomAmount
+
+	for _, reservation := range reservations {
+
+		reservationStart, _ := time.Parse("02-01-2006 15:04", reservation.StartDate)
+		reservationEnd, _ := time.Parse("02-01-2006 15:04", reservation.EndDate)
+
+		if reservationStart.After(startDate) && reservationEnd.Before(endDate) ||
+			reservationStart.Before(startDate) && reservationEnd.After(startDate) ||
+			reservationStart.Before(endDate) && reservationEnd.After(endDate) ||
+			reservationStart.Before(startDate) && reservationEnd.After(endDate) {
+			roomsAvailable--
+		}
+		if roomsAvailable == 0 {
+			return false
+		}
+	}
+
 	return true
 }
