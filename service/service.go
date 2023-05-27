@@ -14,6 +14,7 @@ type serviceInterface interface {
 	InsertUser(userDto dto.UserDto) (dto.UserDto, error)
 	GetUserById(id int) (dto.UserDto, error)
 	GetUsers() (dto.UsersDto, error)
+	UserLogin(loginDto dto.UserLoginDto) (bool, error)
 
 	GetHotelById(id int) (dto.HotelDto, error)
 	GetHotels() (dto.HotelsDto, error)
@@ -66,7 +67,6 @@ func (s *service) GetUserById(id int) (dto.UserDto, error) {
 	userDto.LastName = user.LastName
 	userDto.Dni = user.Dni
 	userDto.Email = user.Email
-	userDto.Password = user.Password
 
 	return userDto, nil
 }
@@ -82,12 +82,26 @@ func (s *service) GetUsers() (dto.UsersDto, error) {
 		userDto.LastName = user.LastName
 		userDto.Dni = user.Dni
 		userDto.Email = user.Email
-		userDto.Password = user.Password
 
 		usersDto = append(usersDto, userDto)
 	}
 
 	return usersDto, nil
+}
+
+func (s *service) UserLogin(loginDto dto.UserLoginDto) (bool, error) {
+
+	var user = client.GetUserByEmail(loginDto.Email)
+
+	if user.Id == 0 {
+		return false, errors.New("user not found")
+	}
+
+	if user.Password != loginDto.Password {
+		return false, errors.New("incorrect password")
+	}
+
+	return true, nil
 }
 
 func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
