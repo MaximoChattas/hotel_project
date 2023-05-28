@@ -21,11 +21,12 @@ type serviceInterface interface {
 	InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error)
 
 	InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error)
+	GetReservationById(id int) (dto.ReservationDto, error)
 	GetReservations() (dto.ReservationsDto, error)
 	GetReservationsByUser(userId int) (dto.UserReservationsDto, error)
 	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error)
 
-	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool //To do
+	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool
 }
 
 var (
@@ -185,6 +186,25 @@ func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.Rese
 	return reservationDto, errors.New("there are no rooms available")
 }
 
+func (s *service) GetReservationById(id int) (dto.ReservationDto, error) {
+	var reservation model.Reservation
+	var reservationDto dto.ReservationDto
+
+	reservation = client.GetReservationById(id)
+
+	if reservation.Id == 0 {
+		return reservationDto, errors.New("reservation not found")
+	}
+
+	reservationDto.Id = reservation.Id
+	reservationDto.StartDate = reservation.StartDate
+	reservationDto.EndDate = reservation.EndDate
+	reservationDto.HotelId = reservation.HotelId
+	reservationDto.UserId = reservation.UserId
+
+	return reservationDto, nil
+}
+
 func (s *service) GetReservations() (dto.ReservationsDto, error) {
 
 	var reservations model.Reservations = client.GetReservations()
@@ -207,10 +227,13 @@ func (s *service) GetReservations() (dto.ReservationsDto, error) {
 
 func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, error) {
 	var user model.User = client.GetUserById(userId)
-	var reservations model.Reservations = client.GetReservationsByUser(userId)
-
 	var userReservationsDto dto.UserReservationsDto
 	var reservationsDto dto.ReservationsDto
+
+	if user.Id == 0 {
+		return userReservationsDto, errors.New("user not found")
+	}
+	var reservations model.Reservations = client.GetReservationsByUser(userId)
 
 	userReservationsDto.UserId = user.Id
 	userReservationsDto.UserName = user.Name
@@ -238,10 +261,14 @@ func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, er
 
 func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error) {
 	var hotel model.Hotel = client.GetHotelById(hotelId)
-	var reservations model.Reservations = client.GetReservationsByHotel(hotelId)
-
 	var hotelReservations dto.HotelReservationsDto
 	var reservationsDto dto.ReservationsDto
+
+	if hotel.Id == 0 {
+		return hotelReservations, errors.New("hotel not found")
+	}
+
+	var reservations model.Reservations = client.GetReservationsByHotel(hotelId)
 
 	hotelReservations.HotelId = hotel.Id
 	hotelReservations.HotelName = hotel.Name
