@@ -8,7 +8,10 @@ function Body() {
   return (
     <div className="hotel-card">
       <div className="hoteles">
-        <img src={hotel1} alt="hotel" className="hotel-image" />
+        <button className="botonhoteles">
+          <img src={hotel1} alt="hotel" className="hotel-image" />
+          <h2 className="hotel-title">Hotel Perfecta</h2>
+        </button>
         <div className="stars">
           <span className="star">&#9733;</span>
           <span className="star">&#9733;</span>
@@ -16,11 +19,14 @@ function Body() {
           <span className="star">&#9733;</span>
           <span className="star">&#9733;</span>
         </div>
-        <h2 className="hotel-title">Hotel Perfecta</h2>
         <h3 className="Precio">$19.369 por dia</h3>
       </div>
+      
       <div className="hoteles">
+        <button className="botonhoteles">
         <img src={hotel2} alt="hotel" className="hotel-image" />
+        <h2 className="hotel-title">Hotel Don</h2>
+        </button>
         <div className="stars">
           <span className="star">&#9733;</span>
           <span className="star">&#9733;</span>
@@ -28,12 +34,14 @@ function Body() {
           <span className="star">&#9733;</span>
           <span className="star">&#9733;</span>
         </div>
-        <h2 className="hotel-title">Hotel Don</h2>
         <h3 className="Precio">$19.369 por dia</h3>
       </div>
 
       <div className="hoteles">
+        <button className="botonhoteles">
         <img src={hotel3} alt="hotel" className="hotel-image" />
+        <h2 className="hotel-title">Hotel Traicion</h2>
+        </button>
         <div className="stars">
           <span className="star">&#9733;</span>
           <span className="star">&#9733;</span>
@@ -41,7 +49,6 @@ function Body() {
           <span className="star">&#9733;</span>
           <span className="star">&#9733;</span>
         </div>
-        <h2 className="hotel-title">Hotel Traicion</h2>
         <h3 className="Precio">$19.369 por dia</h3>
       </div>
     </div>

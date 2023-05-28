@@ -12,6 +12,11 @@
   height: 250px;
   display: inline-block;
 }
+.botonhoteles{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
 .Precio {
   color: white;
 }
@@ -26,6 +31,5 @@
 
 .star {
   color: gold;
-  
   margin-right: 5px;
 }
