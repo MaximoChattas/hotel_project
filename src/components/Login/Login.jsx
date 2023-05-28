@@ -6,7 +6,7 @@ function Login() {
   var database;
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  fetch("http://localhost:3000/item.json")
+  fetch("http://localhost:5173//item.json")
     .then((res) => res.json())
     .then(
       (result) => {
@@ -14,17 +14,6 @@ function Login() {
       },
       (error) => {}
     );
-  // User Login info
-  /* database = [
-    {
-      username: "user1",
-      password: "pass1"
-    },
-    {
-      username: "user2",
-      password: "pass2"
-    }
-  ];*/
 
   const errors = {
     uname: "invalid username",

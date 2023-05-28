@@ -3,20 +3,15 @@
   justify-content: space-between;
 }
 
-.main-navbar {
-  margin-top: 20px;
-  width: 200px;
-  height: 100px;
-  display: inline-block;
-}
 .boton {
   display: block;
-  padding: 10px 30px;
+  padding: 20px 20px;
   border-radius: 100px;
   color: white;
   cursor: pointer;
 }
-.mir {
+h1{
+  
   color: #dad70f;
 }
 h2 {
