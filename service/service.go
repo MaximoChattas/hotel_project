@@ -165,7 +165,7 @@ func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.Rese
 	timeStart, _ := time.Parse("02-01-2006 15:04", reservationDto.StartDate)
 	timeEnd, _ := time.Parse("02-01-2006 15:04", reservationDto.EndDate)
 
-	if timeStart.Before(timeEnd) {
+	if timeStart.After(timeEnd) {
 		return reservationDto, errors.New("a reservation cant end before it starts")
 	}
 
@@ -309,7 +309,8 @@ func (s *service) CheckAvailability(hotelId int, startDate time.Time, endDate ti
 		if reservationStart.After(startDate) && reservationEnd.Before(endDate) ||
 			reservationStart.Before(startDate) && reservationEnd.After(startDate) ||
 			reservationStart.Before(endDate) && reservationEnd.After(endDate) ||
-			reservationStart.Before(startDate) && reservationEnd.After(endDate) {
+			reservationStart.Before(startDate) && reservationEnd.After(endDate) ||
+			reservationStart.Equal(startDate) || reservationEnd.Equal(endDate) {
 			roomsAvailable--
 		}
 		if roomsAvailable == 0 {

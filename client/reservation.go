@@ -42,7 +42,7 @@ func GetReservations() model.Reservations {
 func GetReservationsByUser(userId int) model.Reservations {
 	var reservations model.Reservations
 
-	Db.Where("UserId = ?", userId).Find(&reservations)
+	Db.Where("user_id = ?", userId).Find(&reservations)
 	log.Debug("Reservations: ", reservations)
 
 	return reservations
@@ -52,7 +52,7 @@ func GetReservationsByUser(userId int) model.Reservations {
 func GetReservationsByHotel(hotelId int) model.Reservations {
 	var reservations model.Reservations
 
-	Db.Where("HotelId = ?", hotelId).Find(&reservations)
+	Db.Where("hotel_id = ?", hotelId).Find(&reservations)
 	log.Debug("Reservations: ", reservations)
 
 	return reservations
