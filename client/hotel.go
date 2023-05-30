@@ -31,7 +31,7 @@ func GetHotelById(id int) model.Hotel {
 // encuentra los hoteles
 func GetHotels() model.Hotels {
 	var hotels model.Hotels
-	Db.Preload("Hotel").Find(&hotels)
+	Db.Find(&hotels)
 
 	log.Debug("Hotels: ", hotels)
 

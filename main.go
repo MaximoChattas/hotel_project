@@ -1,6 +1,7 @@
 package main
 
 import (
+	"project/app"
 	"project/db"
 	//Import App directory when created !
 )
@@ -8,5 +9,5 @@ import (
 func main() {
 
 	db.StartDbEngine()
-	//Add start route when created !
+	app.StartRoute()
 }
