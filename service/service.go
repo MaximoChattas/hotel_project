@@ -162,6 +162,17 @@ func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
 
 func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error) {
 
+	userDto := client.GetUserById(reservationDto.UserId)
+	hotelDto := client.GetHotelById(reservationDto.HotelId)
+
+	if userDto.Id == 0 {
+		return reservationDto, errors.New("user not found")
+	}
+
+	if hotelDto.Id == 0 {
+		return reservationDto, errors.New("hotel not found")
+	}
+
 	timeStart, _ := time.Parse("02-01-2006 15:04", reservationDto.StartDate)
 	timeEnd, _ := time.Parse("02-01-2006 15:04", reservationDto.EndDate)
 
