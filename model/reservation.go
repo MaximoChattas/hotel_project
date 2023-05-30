@@ -6,6 +6,7 @@ type Reservation struct {
 	EndDate   string `gorm:"type:varchar(16); not null"`
 	UserId    int    `gorm:"foreignkey:UserId"`
 	HotelId   int    `gorm:"foreignkey:HotelId"`
+	//TODO add payment amount
 }
 
 type Reservations []Reservation

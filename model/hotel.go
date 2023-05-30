@@ -7,6 +7,7 @@ type Hotel struct {
 	Description  string `gorm:"type:varchar(1000)"`
 	StreetName   string `gorm:"type:varchar(100)"`
 	StreetNumber int    `gorm:"type:int"`
+	//TODO add rate
 }
 
 type Hotels []Hotel

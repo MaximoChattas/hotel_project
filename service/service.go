@@ -45,6 +45,7 @@ func (s *service) InsertUser(userDto dto.UserDto) (dto.UserDto, error) {
 	user.Dni = userDto.Dni
 	user.Email = userDto.Email
 	user.Password = userDto.Password
+	user.Role = "Customer"
 
 	user = client.InsertUser(user)
 
