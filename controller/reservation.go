@@ -23,7 +23,7 @@ func InsertReservation(c *gin.Context) {
 	reservationDto, er := service.Service.InsertReservation(reservationDto)
 
 	if er != nil {
-		c.JSON(http.StatusBadRequest, er)
+		c.JSON(http.StatusBadRequest, er.Error())
 	}
 
 	c.JSON(http.StatusCreated, reservationDto)
@@ -37,7 +37,7 @@ func GetReservationById(c *gin.Context) {
 	reservationDto, err := service.Service.GetReservationById(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		c.JSON(http.StatusNotFound, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, reservationDto)
@@ -50,7 +50,7 @@ func GetReservations(c *gin.Context) {
 	reservationsDto, err := service.Service.GetReservations()
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -64,7 +64,7 @@ func GetReservationsByUser(c *gin.Context) {
 	userReservations, err := service.Service.GetReservationsByUser(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		c.JSON(http.StatusNotFound, err.Error())
 		return
 	}
 
@@ -78,7 +78,7 @@ func GetReservationsByHotel(c *gin.Context) {
 	hotelReservations, err := service.Service.GetReservationsByHotel(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		c.JSON(http.StatusNotFound, err.Error())
 		return
 	}
 

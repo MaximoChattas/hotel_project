@@ -23,6 +23,7 @@ func mapUrls() {
 	router.GET("/user/reservations/:id", controller.GetReservationsByUser)
 	router.GET("hotel/reservations/:id", controller.GetReservationsByHotel)
 
+	router.POST("/login", controller.UserLogin)
 
 	log.Info("Finishing mappings configurations")
 }

@@ -23,7 +23,7 @@ func InsertUser(c *gin.Context) {
 	userDto, er := service.Service.InsertUser(userDto)
 
 	if er != nil {
-		c.JSON(http.StatusBadRequest, er)
+		c.JSON(http.StatusBadRequest, er.Error())
 	}
 
 	c.JSON(http.StatusCreated, userDto)
@@ -37,7 +37,7 @@ func GetUserById(c *gin.Context) {
 	userDto, err := service.Service.GetUserById(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		c.JSON(http.StatusNotFound, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, userDto)
@@ -50,7 +50,7 @@ func GetUsers(c *gin.Context) {
 	usersDto, err := service.Service.GetUsers()
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
