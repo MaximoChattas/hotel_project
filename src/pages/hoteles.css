@@ -1,0 +1,27 @@
+.ContainerImagenes {
+    padding-bottom: 20%;
+    padding-left: 100px;
+  }
+  
+  .info {
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    margin-top: -170px;
+  }
+  
+  /* .inputBox {
+    font-size: 17px;
+    padding-left: 20px;
+    border-radius: 3px;
+    border: 1px solid #666;
+  } */
+  
+  .calendarWrap {
+    display: inline-block;
+    position: relative;
+    margin-left: 20px;
+  }
+  
+  

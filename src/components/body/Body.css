@@ -1,8 +1,11 @@
 .hotel-card {
   display: flex;
   justify-content: space-between;
-  margin-left: 30px;
-  margin-right: 30px;
+  /* margin-left: 30px; */
+  /* margin-right: 30px; */
+  background-color: brown;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .hotel-title {
   color: white;
@@ -12,7 +15,7 @@
   height: 250px;
   display: inline-block;
 }
-.botonhoteles{
+.botonhoteles {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -33,3 +36,14 @@
   color: gold;
   margin-right: 5px;
 }
+
+/* .gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.photo-item {
+  flex-basis: 30%;
+  margin-bottom: 20px;
+} */

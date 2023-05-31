@@ -1,14 +1,16 @@
 import React from "react";
-import Navbar from "./components/navbar/Navbar";
-import Body from "./components/body/Body";
+import Home from "./pages/Home";
+import Habitaciones from "./pages/Habitaciones";
 import "./index.css";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Body />
-      {/* <footer /> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/habitaciones" element={<Habitaciones />} />
+      </Routes>
     </>
   );
 }
