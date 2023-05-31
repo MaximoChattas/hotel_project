@@ -8,7 +8,6 @@ import (
 func mapUrls() {
 
 	// Add all methods and its mappings
-	//Add Login router
 	router.POST("/user", controller.InsertUser)
 	router.GET("/user/:id", controller.GetUserById)
 	router.GET("/user", controller.GetUsers)

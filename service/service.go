@@ -114,6 +114,7 @@ func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
 	hotel.RoomAmount = hotelDto.RoomAmount
 	hotel.StreetName = hotelDto.StreetName
 	hotel.StreetNumber = hotelDto.StreetNumber
+	hotel.Rate = hotelDto.Rate
 
 	hotel = client.InsertHotel(hotel)
 
@@ -135,6 +136,7 @@ func (s *service) GetHotels() (dto.HotelsDto, error) {
 		hotelDto.Description = hotel.Description
 		hotelDto.StreetName = hotel.StreetName
 		hotelDto.StreetNumber = hotel.StreetNumber
+		hotelDto.Rate = hotel.Rate
 
 		hotelsDto = append(hotelsDto, hotelDto)
 	}
@@ -156,6 +158,7 @@ func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
 	hotelDto.Description = hotel.Description
 	hotelDto.StreetName = hotel.StreetName
 	hotelDto.StreetNumber = hotel.StreetNumber
+	hotelDto.Rate = hotel.Rate
 
 	return hotelDto, nil
 }
@@ -288,6 +291,7 @@ func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto,
 	hotelReservations.HotelRoomAmount = hotel.RoomAmount
 	hotelReservations.HotelStreetName = hotel.StreetName
 	hotelReservations.HotelStreetNumber = hotel.StreetNumber
+	hotelReservations.HotelRate = hotel.Rate
 
 	for _, reservation := range reservations {
 		var reservationDto dto.ReservationDto
