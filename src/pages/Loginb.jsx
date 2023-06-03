@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "./Loginb.css";
+import "../components/navbar/Navbar.css";
+import { Link, NavLink } from "react-router-dom";
+
 
 function Login() {
+
   // React States
   var database;
   const [errorMessages, setErrorMessages] = useState({});
@@ -71,12 +75,22 @@ function Login() {
   );
 
   return (
+    <>
+    <header>
+      <div className="container">
+        <NavLink className="nav-link" to="/">
+          <h1 className="asd">MIRANDA</h1>
+        </NavLink>
+      </div>
+    </header>
     <div className="Login">
-      <div className="login-form">
+
+        <div className="login-form">
         <div className="title">Sign In</div>
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
-      </div>
+        </div>
     </div>
+    </>
   );
 }
 

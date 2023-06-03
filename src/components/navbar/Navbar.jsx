@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import Log from "../Login/Log";
-import Login from "../Login/Login";
 import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
-  const [EstadoLogin, CambiarEstadoLogin] = useState(false);
   return (
     <header>
       <div className="container">
@@ -13,15 +10,9 @@ function Navbar() {
           <h1 className="asd">MIRANDA</h1>
         </NavLink>
         <div className="contenedorBotones">
-          <button
-            onClick={() => CambiarEstadoLogin(!EstadoLogin)}
-            className="boton"
-          >
+        <NavLink className="nav-link" to="/Iniciar sesion">
             Iniciar sesion
-          </button>
-          <Log estadolog={EstadoLogin} cambiarestadolog={CambiarEstadoLogin}>
-            <Login />
-          </Log>
+          </NavLink>
         </div>
       </div>
     </header>

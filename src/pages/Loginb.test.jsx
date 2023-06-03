@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Login from "./Login";
+import Login from "Loginb";
 
 test("renders learn react link", () => {
   render(<Login />);
