@@ -6,29 +6,26 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 200px;
   margin-top: 100px;
+}
+.title{
+  height: 50px;
+  
+}
+.Username{
+  height: 50px;
+  
+}
+.Password{
+  height: 50px;
+  
+}
+.enviar{
+  height: 50px;
+  
 }
 *{
   background-color: #333;
   color: #fff;
 }
-
-
-/*.container {
-  display: flex;
-  justify-content: space-between;
-  background-color: #333;
-  align-items: center;
-}
-.form{
-  padding: 50px;
-  color: rgb(255, 255, 255);
-  background-color: #333;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  height: 100px; 
-  margin-top: 100px;
-}*/

@@ -11,7 +11,7 @@ function Navbar() {
         </NavLink>
         <div className="contenedorBotones">
         <NavLink className="nav-link" to="/Iniciar sesion">
-            Iniciar sesion
+            <button className="boton">Iniciar sesion</button>
           </NavLink>
         </div>
       </div>
