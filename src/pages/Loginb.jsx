@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Loginb.css";
-import "../components/navbar/Navbar.css";
 import { Link, NavLink } from "react-router-dom";
 
 
@@ -55,19 +54,21 @@ function Login() {
 
   // JSX code for login form
   const renderForm = (
+    
     <div className="form">
       <form onSubmit={handleSubmit}>
-        <div className="input-container">
+        <div className="title">Sign In</div>
+        <div className="Username">
           <label>Username </label>
           <input type="text" name="uname" required />
           {renderErrorMessage("uname")}
         </div>
-        <div className="input-container">
+        <div className="Password">
           <label>Password </label>
           <input type="password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
-        <div className="button-container">
+        <div className="enviar">
           <input type="submit" />
         </div>
       </form>
@@ -83,13 +84,9 @@ function Login() {
         </NavLink>
       </div>
     </header>
-    <div className="Login">
-
-        <div className="login-form">
-        <div className="title">Sign In</div>
+    <div className="login-form">
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
         </div>
-    </div>
     </>
   );
 }
