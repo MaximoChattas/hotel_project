@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "../components/navbar/Navbar";
-import Body from "../components/body/Body";
+import HotelList from "../components/Hoteles/HotelList";
 
 function Home() {
   return (
     <>
       <Navbar />
-      <Body />
+      <HotelList />
     </>
   );
 }

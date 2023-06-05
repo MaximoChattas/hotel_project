@@ -1,0 +1,17 @@
+.hotelASD {
+    width: 300px; /* Ajusta el ancho del contenedor del hotel */
+    margin: 10px; /* Ajusta el margen entre los hoteles */
+  }
+  
+  .hotelASD img {
+    width: 100%; /* Ajusta el tamaño de la imagen del hotel */
+    height: auto; /* Ajusta la altura de la imagen del hotel */
+  }
+  
+  .hotelASD h3 {
+    margin-top: 10px; /* Ajusta el margen superior del título del hotel */
+  }
+  
+  .hotelASD p {
+    margin-top: 5px; /* Ajusta el margen superior del rating del hotel */
+  }

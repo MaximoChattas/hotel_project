@@ -1,0 +1,17 @@
+.ContainerImagenes {
+  padding-bottom: 20%;
+  /* padding-left: 100px; */
+  background-color: #333;
+}
+
+.info {
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  margin-top: -170px;
+}
+
+.descripcion {
+  color: white;
+}

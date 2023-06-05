@@ -17,7 +17,6 @@ function App() {
         />
       </div>
       <div className="info">
-        <h2>Reservar</h2>
         <CalendarComp />
       </div>
     </>
