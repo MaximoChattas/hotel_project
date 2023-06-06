@@ -1,7 +1,6 @@
 .container {
   display: flex;
   justify-content: space-between;
-  background-color: #333;
   align-items: center;
 }
 
@@ -9,9 +8,8 @@
   display: block;
   padding: 20px 20px;
   border-radius: 100px;
-  color: white;
+  color: rgb(0, 0, 0);
   cursor: pointer;
-  background-color: #333;
 }
 
 .contenedorBotones {
@@ -23,7 +21,7 @@
 
 .asd {
   padding-left: 5px;
-  color: #dad70f;
+  color: #000000;
 }
 
 .nav-link {
