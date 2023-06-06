@@ -5,20 +5,19 @@ import (
 	"project/model"
 )
 
-// funcion que permite insertar nuevos hoteles
 func InsertHotel(hotel model.Hotel) model.Hotel {
 
 	result := Db.Create(&hotel)
 
 	if result.Error != nil {
 		log.Error("Failed to insert hotel.")
+		return hotel
 	}
 
 	log.Debug("Hotel created:", hotel.Id)
 	return hotel
 }
 
-// encuentra los hoteles por un ID pasado por parametro
 func GetHotelById(id int) model.Hotel {
 	var hotel model.Hotel
 
@@ -28,7 +27,6 @@ func GetHotelById(id int) model.Hotel {
 	return hotel
 }
 
-// encuentra los hoteles
 func GetHotels() model.Hotels {
 	var hotels model.Hotels
 	Db.Find(&hotels)

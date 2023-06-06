@@ -15,6 +15,7 @@ func InsertUser(user model.User) model.User {
 
 	if result.Error != nil {
 		log.Error("Failed to insert user.")
+		return user
 	}
 
 	log.Debug("User created:", user.Id)
