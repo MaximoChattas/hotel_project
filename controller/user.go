@@ -26,6 +26,7 @@ func InsertUser(c *gin.Context) {
 
 	if er != nil {
 		c.JSON(http.StatusBadRequest, er.Error())
+		return
 	}
 
 	c.JSON(http.StatusCreated, userDto)
@@ -74,6 +75,7 @@ func UserLogin(c *gin.Context) {
 
 	if er != nil {
 		c.JSON(http.StatusUnauthorized, er.Error())
+		return
 	}
 
 	token := jwt.New(jwt.SigningMethodHS256)
