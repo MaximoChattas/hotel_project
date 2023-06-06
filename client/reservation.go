@@ -14,7 +14,7 @@ func InsertReservation(reservation model.Reservation) model.Reservation {
 		log.Error("Failed to insert reservation.")
 	}
 
-	log.Debug("User created:", reservation.Id)
+	log.Debug("Reservation created:", reservation.Id)
 	return reservation
 }
 
