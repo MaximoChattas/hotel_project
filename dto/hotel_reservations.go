@@ -7,7 +7,7 @@ type HotelReservationsDto struct {
 	HotelDescription  string  `json:"hotel_description"`
 	HotelStreetName   string  `json:"hotel_street_name"`
 	HotelStreetNumber int     `json:"hotel_street_number"`
-	HotelRate         float32 `json:"hotel_rate"`
+	HotelRate         float64 `json:"hotel_rate"`
 
 	Reservations ReservationsDto `json:"reservations"`
 }

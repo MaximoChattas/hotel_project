@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"math"
 	"project/client"
 	"project/dto"
 	"project/model"
@@ -191,9 +192,16 @@ func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.Rese
 		reservation.HotelId = reservationDto.HotelId
 		reservation.UserId = reservationDto.UserId
 
+		hoursAmount := timeEnd.Sub(timeStart).Hours()
+		nightsAmount := math.Ceil(hoursAmount / 24)
+		rate := hotelDto.Rate
+
+		reservation.Amount = rate * nightsAmount
+
 		reservation = client.InsertReservation(reservation)
 
 		reservationDto.Id = reservation.Id
+		reservationDto.Amount = reservation.Amount
 
 		return reservationDto, nil
 	}
