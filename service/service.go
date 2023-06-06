@@ -51,6 +51,11 @@ func (s *service) InsertUser(userDto dto.UserDto) (dto.UserDto, error) {
 	user = client.InsertUser(user)
 
 	userDto.Id = user.Id
+	userDto.Role = user.Role
+
+	if user.Id == 0 {
+		return userDto, errors.New("insert error")
+	}
 
 	return userDto, nil
 }
@@ -70,6 +75,7 @@ func (s *service) GetUserById(id int) (dto.UserDto, error) {
 	userDto.LastName = user.LastName
 	userDto.Dni = user.Dni
 	userDto.Email = user.Email
+	userDto.Role = user.Role
 
 	return userDto, nil
 }
@@ -85,6 +91,7 @@ func (s *service) GetUsers() (dto.UsersDto, error) {
 		userDto.LastName = user.LastName
 		userDto.Dni = user.Dni
 		userDto.Email = user.Email
+		userDto.Role = user.Role
 
 		usersDto = append(usersDto, userDto)
 	}
@@ -124,6 +131,10 @@ func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
 	hotel = client.InsertHotel(hotel)
 
 	hotelDto.Id = hotel.Id
+
+	if hotel.Id == 0 {
+		return hotelDto, errors.New("insert error")
+	}
 
 	return hotelDto, nil
 }
