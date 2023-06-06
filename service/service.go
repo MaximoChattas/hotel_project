@@ -224,6 +224,7 @@ func (s *service) GetReservationById(id int) (dto.ReservationDto, error) {
 	reservationDto.EndDate = reservation.EndDate
 	reservationDto.HotelId = reservation.HotelId
 	reservationDto.UserId = reservation.UserId
+	reservationDto.Amount = reservation.Amount
 
 	return reservationDto, nil
 }
@@ -241,6 +242,7 @@ func (s *service) GetReservations() (dto.ReservationsDto, error) {
 		reservationDto.EndDate = reservation.EndDate
 		reservationDto.HotelId = reservation.HotelId
 		reservationDto.UserId = reservation.UserId
+		reservationDto.Amount = reservation.Amount
 
 		reservationsDto = append(reservationsDto, reservationDto)
 	}
@@ -273,6 +275,7 @@ func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, er
 		reservationDto.EndDate = reservation.EndDate
 		reservationDto.HotelId = reservation.HotelId
 		reservationDto.UserId = reservation.UserId
+		reservationDto.Amount = reservation.Amount
 
 		reservationsDto = append(reservationsDto, reservationDto)
 	}
@@ -308,6 +311,7 @@ func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto,
 		reservationDto.EndDate = reservation.EndDate
 		reservationDto.HotelId = reservation.HotelId
 		reservationDto.UserId = reservation.UserId
+		reservationDto.Amount = reservation.Amount
 
 		reservationsDto = append(reservationsDto, reservationDto)
 	}
