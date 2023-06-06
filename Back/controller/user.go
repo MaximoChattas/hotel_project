@@ -5,7 +5,9 @@ import (
 	"project/dto"
 	"project/service"
 	"strconv"
+	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -58,7 +60,7 @@ func GetUsers(c *gin.Context) {
 }
 
 func UserLogin(c *gin.Context) {
-	var loginDto dto.UserLoginDto
+	var loginDto dto.UserDto
 
 	err := c.BindJSON(&loginDto)
 
@@ -68,11 +70,17 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	_, er := service.Service.UserLogin(loginDto)
+	loginDto, er := service.Service.UserLogin(loginDto)
 
 	if er != nil {
 		c.JSON(http.StatusUnauthorized, er.Error())
 	}
+
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["id"] = loginDto.Id
+	claims["role"] = loginDto.Role
+	claims["expiration"] = time.Now().Add(time.Hour * 24).Unix()
 
 	c.JSON(http.StatusAccepted, loginDto)
 }

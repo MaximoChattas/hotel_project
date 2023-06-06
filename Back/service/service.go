@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"math"
 	"project/client"
 	"project/dto"
 	"project/model"
@@ -14,7 +15,7 @@ type serviceInterface interface {
 	InsertUser(userDto dto.UserDto) (dto.UserDto, error)
 	GetUserById(id int) (dto.UserDto, error)
 	GetUsers() (dto.UsersDto, error)
-	UserLogin(loginDto dto.UserLoginDto) (bool, error)
+	UserLogin(loginDto dto.UserDto) (dto.UserDto, error)
 
 	GetHotelById(id int) (dto.HotelDto, error)
 	GetHotels() (dto.HotelsDto, error)
@@ -50,6 +51,11 @@ func (s *service) InsertUser(userDto dto.UserDto) (dto.UserDto, error) {
 	user = client.InsertUser(user)
 
 	userDto.Id = user.Id
+	userDto.Role = user.Role
+
+	if user.Id == 0 {
+		return userDto, errors.New("insert error")
+	}
 
 	return userDto, nil
 }
@@ -69,6 +75,7 @@ func (s *service) GetUserById(id int) (dto.UserDto, error) {
 	userDto.LastName = user.LastName
 	userDto.Dni = user.Dni
 	userDto.Email = user.Email
+	userDto.Role = user.Role
 
 	return userDto, nil
 }
@@ -84,6 +91,7 @@ func (s *service) GetUsers() (dto.UsersDto, error) {
 		userDto.LastName = user.LastName
 		userDto.Dni = user.Dni
 		userDto.Email = user.Email
+		userDto.Role = user.Role
 
 		usersDto = append(usersDto, userDto)
 	}
@@ -91,19 +99,23 @@ func (s *service) GetUsers() (dto.UsersDto, error) {
 	return usersDto, nil
 }
 
-func (s *service) UserLogin(loginDto dto.UserLoginDto) (bool, error) {
+func (s *service) UserLogin(loginDto dto.UserDto) (dto.UserDto, error) {
 
 	var user = client.GetUserByEmail(loginDto.Email)
 
 	if user.Id == 0 {
-		return false, errors.New("user not found")
+		return loginDto, errors.New("user not registered")
 	}
 
 	if user.Password != loginDto.Password {
-		return false, errors.New("incorrect password")
+		return loginDto, errors.New("incorrect password")
 	}
-
-	return true, nil
+	loginDto.Id = user.Id
+	loginDto.Name = user.Name
+	loginDto.LastName = user.LastName
+	loginDto.Dni = user.Dni
+	loginDto.Role = user.Role
+	return loginDto, nil
 }
 
 func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
@@ -119,6 +131,10 @@ func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
 	hotel = client.InsertHotel(hotel)
 
 	hotelDto.Id = hotel.Id
+
+	if hotel.Id == 0 {
+		return hotelDto, errors.New("insert error")
+	}
 
 	return hotelDto, nil
 }
@@ -191,9 +207,16 @@ func (s *service) InsertReservation(reservationDto dto.ReservationDto) (dto.Rese
 		reservation.HotelId = reservationDto.HotelId
 		reservation.UserId = reservationDto.UserId
 
+		hoursAmount := timeEnd.Sub(timeStart).Hours()
+		nightsAmount := math.Ceil(hoursAmount / 24)
+		rate := hotelDto.Rate
+
+		reservation.Amount = rate * nightsAmount
+
 		reservation = client.InsertReservation(reservation)
 
 		reservationDto.Id = reservation.Id
+		reservationDto.Amount = reservation.Amount
 
 		return reservationDto, nil
 	}
@@ -216,6 +239,7 @@ func (s *service) GetReservationById(id int) (dto.ReservationDto, error) {
 	reservationDto.EndDate = reservation.EndDate
 	reservationDto.HotelId = reservation.HotelId
 	reservationDto.UserId = reservation.UserId
+	reservationDto.Amount = reservation.Amount
 
 	return reservationDto, nil
 }
@@ -233,6 +257,7 @@ func (s *service) GetReservations() (dto.ReservationsDto, error) {
 		reservationDto.EndDate = reservation.EndDate
 		reservationDto.HotelId = reservation.HotelId
 		reservationDto.UserId = reservation.UserId
+		reservationDto.Amount = reservation.Amount
 
 		reservationsDto = append(reservationsDto, reservationDto)
 	}
@@ -265,6 +290,7 @@ func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, er
 		reservationDto.EndDate = reservation.EndDate
 		reservationDto.HotelId = reservation.HotelId
 		reservationDto.UserId = reservation.UserId
+		reservationDto.Amount = reservation.Amount
 
 		reservationsDto = append(reservationsDto, reservationDto)
 	}
@@ -300,6 +326,7 @@ func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto,
 		reservationDto.EndDate = reservation.EndDate
 		reservationDto.HotelId = reservation.HotelId
 		reservationDto.UserId = reservation.UserId
+		reservationDto.Amount = reservation.Amount
 
 		reservationsDto = append(reservationsDto, reservationDto)
 	}

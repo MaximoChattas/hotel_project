@@ -7,7 +7,7 @@ type HotelDto struct {
 	Description  string  `json:"description"`
 	StreetName   string  `json:"street_name"`
 	StreetNumber int     `json:"street_number"`
-	Rate         float32 `json:"rate"`
+	Rate         float64 `json:"rate"`
 }
 
 type HotelsDto []HotelDto
