@@ -3,7 +3,6 @@
 }
 
 .App-content {
-  background-color: #282c34;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
