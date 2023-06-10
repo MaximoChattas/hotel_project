@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Calendar from "../components/Calendar";
 
 const HotelDetails = () => {
   const { id } = useParams();
@@ -14,7 +15,8 @@ const HotelDetails = () => {
           const data = await response.json();
           setHotel(data);
         } else {
-          throw new Error("Error fetching hotel details");
+          const errorData = await response.json();
+          throw new Error(errorData.error);
         }
       } catch (error) {
         setError(error.message);
@@ -33,14 +35,15 @@ const HotelDetails = () => {
   }
 
   return (
-    <div>
+    <>
       <h1>{hotel.name}</h1>
       <p>
         Dirección: {hotel.street_name}, {hotel.street_number}
       </p>
       <p>Description: {hotel.description}</p>
-      {/* Render your calendar component for reservations here */}
-    </div>
+      <p>Precio por noche: ${hotel.rate}</p>
+      <Calendar />
+    </>
   );
 };
 

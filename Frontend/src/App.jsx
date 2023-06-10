@@ -6,12 +6,10 @@ import HotelDetails from "./Components/HotelDetails";
 const App = () => {
   return (
    <div>
-   <BrowserRouter>
    <Routes>
     <Route path="/" exact element={<HotelList />} />
     <Route path="/hotel/:id" element={<HotelDetails />} />
    </Routes>
-   </BrowserRouter>
    </div>
   );
 };
