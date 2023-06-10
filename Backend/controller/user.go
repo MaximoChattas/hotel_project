@@ -64,7 +64,6 @@ func UserLogin(c *gin.Context) {
 	var loginDto dto.UserDto
 
 	err := c.BindJSON(&loginDto)
-
 	if err != nil {
 		log.Error(err.Error())
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -72,17 +71,40 @@ func UserLogin(c *gin.Context) {
 	}
 
 	loginDto, er := service.Service.UserLogin(loginDto)
-
 	if er != nil {
 		c.JSON(http.StatusUnauthorized, er.Error())
 		return
 	}
 
+	token, err := generateToken(loginDto)
+	if err != nil {
+		log.Error(err.Error())
+		c.JSON(http.StatusInternalServerError, "Failed to generate token")
+		return
+	}
+
+	response := struct {
+		Token string        `json:"token"`
+		User  dto.UserDto   `json:"user"`
+	}{
+		Token: token,
+		User:  loginDto,
+	}
+
+	c.JSON(http.StatusAccepted, response)
+}
+
+func generateToken(loginDto dto.UserDto) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["id"] = loginDto.Id
 	claims["role"] = loginDto.Role
 	claims["expiration"] = time.Now().Add(time.Hour * 24).Unix()
 
-	c.JSON(http.StatusAccepted, loginDto)
+	tokenString, err := token.SignedString([]byte("your-secret-key"))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }
