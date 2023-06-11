@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import Login from "../Login/Login"
-import Style from "../NavBar/NavBar.css"
+import { LoginContext, UserProfileContext } from '../../App';
+import Style from '../NavBar/NavBar.css'
 
 function Navbar() {
+  const { loggedIn } = useContext(LoginContext);
+  const { userProfile } = useContext(UserProfileContext);
 
   return (
     <header>
@@ -12,13 +14,20 @@ function Navbar() {
           <h1 className="asd">MIRANDA</h1>
         </NavLink>
         <div className="contenedorBotones">
-        <NavLink className="nav-link" to="/login">
+          {loggedIn ? (
+            <NavLink className="nav-link" to="/profile">
+              <button className="boton">Hola {userProfile.name}</button>
+            </NavLink>
+          ) : (
+            <NavLink className="nav-link" to="/login">
               <button className="boton">Iniciar sesion</button>
-        </NavLink>
+            </NavLink>
+          )}
         </div>
       </div>
     </header>
   );
 }
+
 
 export default Navbar;

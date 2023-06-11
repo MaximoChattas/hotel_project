@@ -47,7 +47,7 @@ const HotelList = () => {
                     </Link>
                 </h5>
                 <p className="card-text">
-                  Dirección: {hotel.street_name}, {hotel.street_number}
+                  Dirección: {hotel.street_name} {hotel.street_number}
                 </p>
                 <p className="card-text">${hotel.rate}</p>
               </div>

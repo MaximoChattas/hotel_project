@@ -40,7 +40,7 @@ const HotelDetails = () => {
       <Navbar />
       <h1>{hotel.name}</h1>
       <p>
-        Dirección: {hotel.street_name}, {hotel.street_number}
+        Dirección: {hotel.street_name} {hotel.street_number}
       </p>
       <p>Description: {hotel.description}</p>
       <p>Precio por noche: ${hotel.rate}</p>
