@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { LoginContext, UserProfileContext } from '../../App';
+import { useNavigate } from "react-router-dom";
+import { UserProfileContext } from '../../App';
 import { DateRange } from "react-date-range";
 import { addDays, format, differenceInHours } from "date-fns";
 import "react-date-range/dist/styles.css";
@@ -7,8 +8,8 @@ import "react-date-range/dist/theme/default.css";
 
 const Calendar = ({ hotel_id, hotelRate }) => {
   const { userProfile } = useContext(UserProfileContext);
-
-  const [ reservation, setReservation ] = useState(null)
+  const [ reservation, setReservation ] = useState(null);
+  const navigate = useNavigate();
   
   // date state
   const [range, setRange] = useState([
@@ -76,6 +77,8 @@ const Calendar = ({ hotel_id, hotelRate }) => {
         setReservationSaved(true);
         const data = await response.json();
         setReservation(data);
+        const url = "/reservation/"+data.id;
+        navigate(url);
       } else {
         console.log("Error saving reservation.");
       }
@@ -103,8 +106,8 @@ const Calendar = ({ hotel_id, hotelRate }) => {
       </div>
       <div>
         <p>Total: ${amount}</p>
-        <button onClick={handleReservation} disabled={reservationSaved}>
-          {reservationSaved ? "Reserva Guardada" : "Reservar"}
+        <button onClick={handleReservation}>
+          Reservar
         </button>
       </div>
     </>

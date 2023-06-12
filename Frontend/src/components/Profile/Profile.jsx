@@ -16,6 +16,15 @@ function Profile() {
         navigate('/');
     };
 
+    if (!userProfile) {
+        return (
+            <>
+                <Navbar />
+                <p>No puedes acceder a este sitio.</p>
+            </>
+        )
+      }
+
     return (
         <>
             <Navbar />
