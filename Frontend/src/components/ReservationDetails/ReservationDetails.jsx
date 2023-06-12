@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserProfileContext } from '../../App';
 
 import Navbar from "../NavBar/NavBar";
@@ -55,15 +56,17 @@ const ReservationDetails = () => {
             <p>No puedes acceder a este sitio.</p>
         </>
     )
-  }
+   }
 
   return (
     <>
       <Navbar />
-      <h1>Reserva</h1>
+      <h2>Reserva {id}</h2>
       {hotel && (
         <>
-          <h3>{hotel.name}</h3>
+          <Link to={`/hotel/${hotel.id}`}>
+                {hotel.name}
+            </Link>
           <h6>{hotel.street_name} {hotel.street_number}</h6>
         </>
       )}
