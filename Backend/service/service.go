@@ -54,7 +54,7 @@ func (s *service) InsertUser(userDto dto.UserDto) (dto.UserDto, error) {
 	userDto.Role = user.Role
 
 	if user.Id == 0 {
-		return userDto, errors.New("insert error")
+		return userDto, errors.New("error creating user")
 	}
 
 	return userDto, nil
@@ -133,7 +133,7 @@ func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
 	hotelDto.Id = hotel.Id
 
 	if hotel.Id == 0 {
-		return hotelDto, errors.New("insert error")
+		return hotelDto, errors.New("error creating hotel")
 	}
 
 	return hotelDto, nil

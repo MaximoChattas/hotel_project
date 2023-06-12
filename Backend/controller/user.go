@@ -18,14 +18,14 @@ func InsertUser(c *gin.Context) {
 
 	if err != nil {
 		log.Error(err.Error())
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	userDto, er := service.Service.InsertUser(userDto)
 
 	if er != nil {
-		c.JSON(http.StatusBadRequest, er.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": er.Error()})
 		return
 	}
 
@@ -40,7 +40,7 @@ func GetUserById(c *gin.Context) {
 	userDto, err := service.Service.GetUserById(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, err.Error())
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, userDto)
@@ -53,7 +53,7 @@ func GetUsers(c *gin.Context) {
 	usersDto, err := service.Service.GetUsers()
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -66,13 +66,13 @@ func UserLogin(c *gin.Context) {
 	err := c.BindJSON(&loginDto)
 	if err != nil {
 		log.Error(err.Error())
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	loginDto, er := service.Service.UserLogin(loginDto)
 	if er != nil {
-		c.JSON(http.StatusUnauthorized, er.Error())
+		c.JSON(http.StatusUnauthorized, gin.H{"error": er.Error()})
 		return
 	}
 

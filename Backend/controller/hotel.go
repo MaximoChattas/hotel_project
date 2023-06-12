@@ -16,14 +16,14 @@ func InsertHotel(c *gin.Context) {
 
 	if err != nil {
 		log.Error(err.Error())
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	userDto, er := service.Service.InsertHotel(hotelDto)
 
 	if er != nil {
-		c.JSON(http.StatusBadRequest, er.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": er.Error()})
 		return
 	}
 
@@ -38,7 +38,7 @@ func GetHotelById(c *gin.Context) {
 	hotelDto, err := service.Service.GetHotelById(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, err.Error())
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, hotelDto)
@@ -51,7 +51,7 @@ func GetHotels(c *gin.Context) {
 	hotelsDto, err := service.Service.GetHotels()
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
