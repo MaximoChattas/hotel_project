@@ -80,10 +80,13 @@ const Calendar = ({ hotel_id, hotelRate }) => {
         const url = "/reservation/"+data.id;
         navigate(url);
       } else {
-        console.log("Error saving reservation.");
+        const data = await response.json();
+        const errorMessage = data.error || 'Error';
+        throw new Error(errorMessage);
       }
     } catch (error) {
-      console.log("Error:", error);
+      console.error(error);
+      setError(error.message);
     }
   };
 

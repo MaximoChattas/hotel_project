@@ -18,6 +18,12 @@ function Signup() {
     setError('');
   
     try {
+
+      if(!name || !last_name || !dni || !email || !password)
+      {
+        throw new Error('Complete todos los campos requeridos')
+      }
+
       const response = await fetch('http://localhost:8090/user', {
         method: 'POST',
         headers: {
@@ -30,11 +36,13 @@ function Signup() {
 
         navigate('/login');
       } else {
-        throw new Error('Error');
+        const data = await response.json();
+        const errorMessage = data.error || 'Error';
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error(error);
-      setError('Error');
+      setError(error.message);
     }
   };
 
@@ -84,6 +92,7 @@ function Signup() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              {error && <p className="error-message">{error}</p>}
               <button type="submit">
                 Registrate
               </button>

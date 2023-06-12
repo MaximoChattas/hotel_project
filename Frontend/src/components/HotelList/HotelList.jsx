@@ -16,9 +16,12 @@ const HotelList = () => {
           const data = await response.json();
           setHotels(data);
         } else {
-          throw new Error("Error fetching hotels");
+          const data = await response.json();
+          const errorMessage = data.error || 'Error';
+          throw new Error(errorMessage);
         }
       } catch (error) {
+        console.error(error);
         setError(error.message);
       }
     };

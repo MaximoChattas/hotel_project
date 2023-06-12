@@ -42,11 +42,13 @@ function LoadHotel() {
 
         navigate('/');
       } else {
-        throw new Error('Error');
+        const data = await response.json();
+        const errorMessage = data.error || 'Error';
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error(error);
-      setError('Error');
+      setError(error.message);
     }
   };
 

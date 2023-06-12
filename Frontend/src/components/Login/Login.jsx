@@ -46,12 +46,13 @@ function Login() {
         setUserProfile(user);
         navigate('/');
       } else {
-        throw new Error('Invalid email or password');
+        const data = await response.json();
+        const errorMessage = data.error || 'Error';
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error(error);
-      setError('Invalid email or password');
-      window.alert('Login failed. Please check your email and password.');
+      setError(error.message);
     } finally {
       setLoading(false);
     }
