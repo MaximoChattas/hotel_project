@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { UserProfileContext } from '../../App';
+import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
@@ -10,6 +10,7 @@ const UserReservations = () => {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
   const { userProfile } = useContext(UserProfileContext);
+  const { loggedIn } = useContext(LoginContext);
 
   useEffect(() => {
     const fetchUserReservations = async () => {
@@ -48,7 +49,7 @@ const UserReservations = () => {
     return <div>Loading...</div>;
   }
 
-  if (!userProfile || (userReservations.user_id !== userProfile.id)) {
+  if (!loggedIn || (userReservations.user_id !== userProfile.id)) {
     return (
         <>
             <Navbar />

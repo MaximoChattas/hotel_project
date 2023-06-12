@@ -7,6 +7,7 @@ import Profile from "./components/Profile/Profile";
 import Signup from "./components/SignUp/SignUp";
 import ReservationDetails from "./components/ReservationDetails/ReservationDetails";
 import UserReservations from "./components/UserReservations/UserReservations";
+import LoadHotel from "./components/LoadHotel/LoadHotel";
 
 // Create the LoginContext
 export const LoginContext = React.createContext();
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="loadhotel" element={<LoadHotel />} />
             <Route path="/reservation/:id" element={<ReservationDetails />} />
             <Route path="/user/reservations/:id" element={<UserReservations />} />
           </Routes>
