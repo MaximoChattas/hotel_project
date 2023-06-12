@@ -68,8 +68,9 @@ const AdminUserReservations = () => {
           );
           return (
             <li key={user.id} className="list-group-item">
-              <h3>{user.name} {user.last_name}</h3>
-
+              <Link to={`/user/${user.id}`}>
+                <h3>{user.name} {user.last_name}</h3>
+              </Link>
               {userReservationsFiltered.length > 0 ? (
                 <ul className="list-group">
                   {userReservationsFiltered.map(reservation => (

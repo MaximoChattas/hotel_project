@@ -68,8 +68,9 @@ const AdminHotelReservations = () => {
           );
           return (
             <li key={hotel.id} className="list-group-item">
-              <h3>{hotel.name}</h3>
-
+              <Link to={`/hotel/${hotel.id}`}>
+                <h3>{hotel.name}</h3>
+              </Link>
               {hotelReservationsFiltered.length > 0 ? (
                 <ul className="list-group">
                   {hotelReservationsFiltered.map(reservation => (
@@ -80,7 +81,9 @@ const AdminHotelReservations = () => {
                       <p>Inicio: {reservation.start_date}</p>
                       <p>Fin: {reservation.end_date}</p>
                       <p>Costo: {reservation.amount}</p>
-                      <p>Usuario Nº: {reservation.user_id}</p>
+                      <Link to={`/user/${reservation.user_id}`}>
+                        <p>Nº Usuario: {reservation.user_id}</p>
+                      </Link>
                     </li>
                   ))}
                 </ul>
