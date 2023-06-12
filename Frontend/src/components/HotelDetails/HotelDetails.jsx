@@ -3,6 +3,7 @@ import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
 import Calendar from "../Calendar/Calendar";
 import Navbar from "../NavBar/NavBar";
+import "./HotelDetails.css"
 
 const HotelDetails = () => {
   const { id } = useParams();
@@ -50,14 +51,17 @@ const HotelDetails = () => {
   return (
     <>
       <Navbar />
-      <h1>{hotel.name}</h1>
-      <p>
-        Dirección: {hotel.street_name} {hotel.street_number}
-      </p>
-      <p>Description: {hotel.description}</p>
-      <p>Precio por noche: ${hotel.rate}</p>
-      <Calendar hotel_id={id} hotelRate={hotel.rate}/>
+      <div className="descripcion">
+        <h1>{hotel.name}</h1>
+        <p>
+          Dirección: {hotel.street_name} {hotel.street_number}
+        </p>
+        <p>Description: {hotel.description}</p>
+        <p>Precio por noche: ${hotel.rate}</p>
+        <Calendar hotel_id={id} hotelRate={hotel.rate}/>
+      </div>
     </>
+
   );
 };
 

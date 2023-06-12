@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from "../NavBar/NavBar";
 import { LoginContext, UserProfileContext } from '../../App';
 import AdminPanel from "../AdminPanel/AdminPanel";
+import "./Profile.css"
 
 function Profile() {
     const { loggedIn, setLoggedIn } = useContext(LoginContext);
@@ -30,22 +31,15 @@ function Profile() {
     return (
         <>
             <Navbar />
-            <div>
-                <h3>Mi Perfil</h3>
-                <p>Nombre: {userProfile.name}</p>
-                <p>Apellido: {userProfile.last_name}</p>
+            <div className="descripcion">
+                <h3>Profile</h3>
+                <p>Name: {userProfile.name}</p>
+                <p>Last name: {userProfile.last_name}</p>
                 <p>DNI: {userProfile.dni}</p>
                 <p>Email: {userProfile.email}</p>
-                <p>Nº de usuario: {userProfile.id}</p>
+                <p>ID: {userProfile.id}</p>
+                <button onClick={handleLogout}>Logout</button>
             </div>
-            <div>
-                {userProfile.role === "Customer" && <button onClick={()=>navigate(reservationURL)}> Mis Reservas </button>}
-                <button onClick={handleLogout}>Cerrar Sesión</button>
-            </div>
-            <div>
-                <AdminPanel />
-            </div>
-            
         </>
     )
 }
