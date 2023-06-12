@@ -49,7 +49,7 @@ const ReservationDetails = () => {
     return <div>Loading...</div>;
   }
 
-  if (!userProfile || (reservation.user_id !== userProfile.id)) {
+  if (!userProfile || (reservation.user_id !== userProfile.id) || (userProfile.role !== "Admin")) {
     return (
         <>
             <Navbar />
