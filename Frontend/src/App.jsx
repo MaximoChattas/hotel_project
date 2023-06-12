@@ -9,6 +9,7 @@ import ReservationDetails from "./components/ReservationDetails/ReservationDetai
 import UserReservations from "./components/UserReservations/UserReservations";
 import LoadHotel from "./components/LoadHotel/LoadHotel";
 import AdminHotelReservations from "./components/AdminHotelReservations/AdminHotelReservations";
+import AdminUserReservations from "./components/AdminUserReservations/AdminUserReservations";
 
 // Create the LoginContext
 export const LoginContext = React.createContext();
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/reservation/:id" element={<ReservationDetails />} />
             <Route path="/user/reservations/:id" element={<UserReservations />} />
             <Route path="/admin/reservations/hotel" element={<AdminHotelReservations />} />
+            <Route path="/admin/reservations/user" element={<AdminUserReservations />} />
           </Routes>
         </UserProfileContext.Provider>
       </LoginContext.Provider>

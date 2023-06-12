@@ -1,0 +1,100 @@
+import React, { useEffect, useState, useContext } from "react";
+import { LoginContext, UserProfileContext } from '../../App';
+import { Link } from "react-router-dom";
+import Navbar from "../NavBar/NavBar";
+
+const AdminUserReservations = () => {
+  const [userReservations, setUserReservations] = useState({ reservations: [] });
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+  const { userProfile } = useContext(UserProfileContext);
+  const { loggedIn } = useContext(LoginContext);
+
+  useEffect(() => {
+    const fetchUserReservations = async () => {
+      try {
+        const response = await fetch(`http://localhost:8090/reservation`);
+        if (response.ok) {
+          const data = await response.json();
+          setUserReservations({ reservations: data });
+
+          const userResponse = await fetch(`http://localhost:8090/user`);
+          if (userResponse.ok) {
+            const userData = await userResponse.json();
+            setUsers(userData);
+          } else {
+            const errorData = await userResponse.json();
+            throw new Error(errorData.error);
+          }
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.error);
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchUserReservations();
+  }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!userReservations) {
+    return <div>Loading...</div>;
+  }
+
+  if (!loggedIn || userProfile.role !== "Admin") {
+    return (
+      <>
+        <Navbar />
+        <p>No puedes acceder a este sitio.</p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Navbar />
+      <h2>Reservas</h2>
+
+      {users.map(user => {
+        const filteredReservations = userReservations.reservations || [];
+        const userReservationsFiltered = filteredReservations.filter(
+          reservation => reservation.user_id === user.id
+        );
+        if (userReservationsFiltered.length > 0) {
+          return (
+            <div key={user.id}>
+              <h3>{user.name} {user.last_name}</h3>
+              {userReservationsFiltered.map(reservation => (
+                <div key={reservation.id}>
+                  <Link to={`/reservation/${reservation.id}`}>
+                    Nº Reserva: {reservation.id}
+                  </Link>
+                  <p>Inicio: {reservation.start_date}</p>
+                  <p>Fin: {reservation.end_date}</p>
+                  <p>Costo: {reservation.amount}</p>
+                  <Link to={`/hotel/${reservation.hotel_id}`}>
+                    Nº Hotel: {reservation.hotel_id}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          );
+        } else {
+          return (
+            <div key={user.id}>
+              <h3>{user.name}</h3>
+              <p>Sin reservas.</p>
+            </div>
+          );
+        }
+      })}
+    </>
+  );
+};
+
+export default AdminUserReservations;

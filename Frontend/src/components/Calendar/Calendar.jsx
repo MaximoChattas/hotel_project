@@ -90,6 +90,10 @@ const Calendar = ({ hotel_id, hotelRate }) => {
   const today = new Date();
   const amount = calculateAmount();
 
+  if (userProfile.role === "Admin") {
+    return null;
+  }
+
   return (
     <>
       <div className="calendarWrap">

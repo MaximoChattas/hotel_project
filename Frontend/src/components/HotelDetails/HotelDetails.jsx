@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
 import Calendar from "../Calendar/Calendar";
 import Navbar from "../NavBar/NavBar";
@@ -7,6 +8,8 @@ const HotelDetails = () => {
   const { id } = useParams();
   const [hotel, setHotel] = useState(null);
   const [error, setError] = useState(null);
+  const { userProfile } = useContext(UserProfileContext);
+  const { loggedIn } = useContext(LoginContext);
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
@@ -33,6 +36,15 @@ const HotelDetails = () => {
 
   if (!hotel) {
     return <div>Loading...</div>;
+  }
+
+  if (!loggedIn) {
+    return (
+      <>
+        <Navbar />
+        <p>No puedes acceder a este sitio.</p>
+      </>
+    );
   }
 
   return (
