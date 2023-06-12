@@ -44,7 +44,7 @@ function Login() {
         localStorage.setItem('userProfile', JSON.stringify(user));
         setLoggedIn(true);
         setUserProfile(user);
-        navigate('/profile');
+        navigate('/');
       } else {
         throw new Error('Invalid email or password');
       }

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
+import { LoginContext } from '../../App';
 
 const HotelList = () => {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
+  const { loggedIn } = useContext(LoginContext)
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -42,9 +44,14 @@ const HotelList = () => {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title">
-                  <Link to={`/hotel/${hotel.id}`}>
+                  {loggedIn ? (
+                    <Link to={`/hotel/${hotel.id}`}>
                     {hotel.name}
                     </Link>
+                  ) : 
+                  <Link to={`/login`}>
+                    {hotel.name}
+                    </Link>}
                 </h5>
                 <p className="card-text">
                   Dirección: {hotel.street_name} {hotel.street_number}

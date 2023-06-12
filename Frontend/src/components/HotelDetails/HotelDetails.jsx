@@ -44,7 +44,7 @@ const HotelDetails = () => {
       </p>
       <p>Description: {hotel.description}</p>
       <p>Precio por noche: ${hotel.rate}</p>
-      <Calendar />
+      <Calendar hotel_id={id} hotelRate={hotel.rate}/>
     </>
   );
 };
