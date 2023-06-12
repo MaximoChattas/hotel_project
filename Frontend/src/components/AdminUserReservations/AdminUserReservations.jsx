@@ -60,39 +60,39 @@ const AdminUserReservations = () => {
       <Navbar />
       <h2>Reservas</h2>
 
-      {users.map(user => {
-        const filteredReservations = userReservations.reservations || [];
-        const userReservationsFiltered = filteredReservations.filter(
-          reservation => reservation.user_id === user.id
-        );
-        if (userReservationsFiltered.length > 0) {
+      <ul className="list-group">
+        {users.map(user => {
+          const filteredReservations = userReservations.reservations || [];
+          const userReservationsFiltered = filteredReservations.filter(
+            reservation => reservation.user_id === user.id
+          );
           return (
-            <div key={user.id}>
+            <li key={user.id} className="list-group-item">
               <h3>{user.name} {user.last_name}</h3>
-              {userReservationsFiltered.map(reservation => (
-                <div key={reservation.id}>
-                  <Link to={`/reservation/${reservation.id}`}>
-                    Nº Reserva: {reservation.id}
-                  </Link>
-                  <p>Inicio: {reservation.start_date}</p>
-                  <p>Fin: {reservation.end_date}</p>
-                  <p>Costo: {reservation.amount}</p>
-                  <Link to={`/hotel/${reservation.hotel_id}`}>
-                    Nº Hotel: {reservation.hotel_id}
-                  </Link>
-                </div>
-              ))}
-            </div>
+
+              {userReservationsFiltered.length > 0 ? (
+                <ul className="list-group">
+                  {userReservationsFiltered.map(reservation => (
+                    <li key={reservation.id} className="list-group-item">
+                      <Link to={`/reservation/${reservation.id}`}>
+                        <p>Nº Reserva: {reservation.id}</p>
+                      </Link>
+                      <p>Inicio: {reservation.start_date}</p>
+                      <p>Fin: {reservation.end_date}</p>
+                      <p>Costo: {reservation.amount}</p>
+                      <Link to={`/hotel/${reservation.hotel_id}`}>
+                        <p>Nº Hotel: {reservation.hotel_id}</p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Sin reservas.</p>
+              )}
+            </li>
           );
-        } else {
-          return (
-            <div key={user.id}>
-              <h3>{user.name}</h3>
-              <p>Sin reservas.</p>
-            </div>
-          );
-        }
-      })}
+        })}
+      </ul>
     </>
   );
 };

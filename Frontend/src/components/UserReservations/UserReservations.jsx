@@ -64,37 +64,39 @@ const UserReservations = () => {
       <h2>Reservas de {userReservations.user_name} {userReservations.user_last_name}</h2>
   
       {userReservations.reservations ? (
-        <>
-        {hotels.map(hotel => {
-          const hotelReservations = userReservations.reservations.filter(
-            reservation => reservation.hotel_id === hotel.id
-          );
-          if (hotelReservations.length > 0) {
-            return (
-              <div key={hotel.id}>
-                <h3>{hotel.name}</h3>
-                {hotelReservations.map(reservation => (
-                  <div key={reservation.id}>
-                    <Link to={`/reservation/${reservation.id}`}>
-                      Nº Reserva: {reservation.id}
-                    </Link>
-                    <p>Inicio: {reservation.start_date}</p>
-                    <p>Fin: {reservation.end_date}</p>
-                    <p>Costo: {reservation.amount}</p>
-                  </div>
-                ))}
-              </div>
+        <ul className="list-group">
+          {hotels.map(hotel => {
+            const hotelReservations = userReservations.reservations.filter(
+              reservation => reservation.hotel_id === hotel.id
             );
-          } else {
-            return null;
-          }
-        })}
-      </>
+            if (hotelReservations.length > 0) {
+              return (
+                <li key={hotel.id} className="list-group-item">
+                  <h3>{hotel.name}</h3>
+                  <ul className="list-group">
+                    {hotelReservations.map(reservation => (
+                      <li key={reservation.id} className="list-group-item">
+                        <Link to={`/reservation/${reservation.id}`}>
+                          Nº Reserva: {reservation.id}
+                        </Link>
+                        <p>Inicio: {reservation.start_date}</p>
+                        <p>Fin: {reservation.end_date}</p>
+                        <p>Costo: {reservation.amount}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </ul>
       ) : (
         <p>No tiene ninguna reserva.</p>
       )}
     </>
-  );
+  );  
   
 };
 

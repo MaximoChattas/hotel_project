@@ -60,37 +60,37 @@ const AdminHotelReservations = () => {
       <Navbar />
       <h2>Reservas</h2>
 
-      {hotels.map(hotel => {
-        const filteredReservations = hotelReservations.reservations || [];
-        const hotelReservationsFiltered = filteredReservations.filter(
-          reservation => reservation.hotel_id === hotel.id
-        );
-        if (hotelReservationsFiltered.length > 0) {
-          return (
-            <div key={hotel.id}>
-              <h3>{hotel.name}</h3>
-              {hotelReservationsFiltered.map(reservation => (
-                <div key={reservation.id}>
-                  <Link to={`/reservation/${reservation.id}`}>
-                    Nº Reserva: {reservation.id}
-                  </Link>
-                  <p>Inicio: {reservation.start_date}</p>
-                  <p>Fin: {reservation.end_date}</p>
-                  <p>Costo: {reservation.amount}</p>
-                  <p>Usuario Nº: {reservation.user_id}</p>
-                </div>
-              ))}
-            </div>
+      <ul className="list-group">
+        {hotels.map(hotel => {
+          const filteredReservations = hotelReservations.reservations || [];
+          const hotelReservationsFiltered = filteredReservations.filter(
+            reservation => reservation.hotel_id === hotel.id
           );
-        } else {
           return (
-            <div key={hotel.id}>
+            <li key={hotel.id} className="list-group-item">
               <h3>{hotel.name}</h3>
-              <p>Sin reservas.</p>
-            </div>
+
+              {hotelReservationsFiltered.length > 0 ? (
+                <ul className="list-group">
+                  {hotelReservationsFiltered.map(reservation => (
+                    <li key={reservation.id} className="list-group-item">
+                      <Link to={`/reservation/${reservation.id}`}>
+                        <p>Nº Reserva: {reservation.id}</p>
+                      </Link>
+                      <p>Inicio: {reservation.start_date}</p>
+                      <p>Fin: {reservation.end_date}</p>
+                      <p>Costo: {reservation.amount}</p>
+                      <p>Usuario Nº: {reservation.user_id}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Sin reservas.</p>
+              )}
+            </li>
           );
-        }
-      })}
+        })}
+      </ul>
     </>
   );
 };
