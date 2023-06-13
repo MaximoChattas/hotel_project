@@ -25,6 +25,12 @@ function LoadHotel() {
     setError('');
   
     try {
+
+      if(!name || !street_name || !street_number || !room_amount || !rate)
+      {
+        throw new Error('Complete todos los campos requeridos')
+      }
+
       const response = await fetch('http://localhost:8090/hotel', {
         method: 'POST',
         headers: {
@@ -127,6 +133,7 @@ function LoadHotel() {
                     </div>
                 </div>
               </div>
+              {error && <p className="error-message">{error}</p>}
               <button type="submit">Cargar Hotel</button>
             </form>
           </div>
