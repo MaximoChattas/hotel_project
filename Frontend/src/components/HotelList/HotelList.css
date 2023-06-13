@@ -22,3 +22,9 @@
 .card-text {
     margin-bottom: 0.25rem;
 }
+
+.row {
+    background-color: #333;
+    width: 100vw;
+    height: 100vh;
+}

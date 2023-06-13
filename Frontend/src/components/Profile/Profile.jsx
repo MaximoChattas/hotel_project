@@ -38,7 +38,13 @@ function Profile() {
                 <p>DNI: {userProfile.dni}</p>
                 <p>Email: {userProfile.email}</p>
                 <p>ID: {userProfile.id}</p>
-                <button onClick={handleLogout}>Logout</button>
+                <div>
+                    {userProfile.role === "Customer" && <button onClick={()=>navigate(reservationURL)}> Mis Reservas </button>}
+                    <button onClick={handleLogout}>Cerrar Sesión</button>
+                </div>
+            </div>
+            <div>
+                <AdminPanel />
             </div>
         </>
     )
