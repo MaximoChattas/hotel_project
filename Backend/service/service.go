@@ -28,6 +28,7 @@ type serviceInterface interface {
 	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error)
 
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool
+	CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error)
 }
 
 var (
@@ -361,4 +362,35 @@ func (s *service) CheckAvailability(hotelId int, startDate time.Time, endDate ti
 	}
 
 	return true
+}
+
+func (s *service) CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error) {
+
+	var hotelsAvailable dto.HotelsDto
+
+	reservationStart, _ := time.Parse("02-01-2006 15:04", startDate)
+	reservationEnd, _ := time.Parse("02-01-2006 15:04", endDate)
+
+	if reservationStart.After(reservationEnd) {
+		return hotelsAvailable, errors.New("a reservation cant end before it starts")
+	}
+
+	hotels := client.GetHotels()
+
+	for _, hotel := range hotels {
+		if s.CheckAvailability(hotel.Id, reservationStart, reservationEnd) {
+			var hotelDto dto.HotelDto
+			hotelDto.Id = hotel.Id
+			hotelDto.Name = hotel.Name
+			hotelDto.StreetName = hotel.StreetName
+			hotelDto.StreetNumber = hotel.StreetNumber
+			hotelDto.RoomAmount = hotel.RoomAmount
+			hotelDto.Rate = hotel.Rate
+			hotelDto.Description = hotel.Description
+
+			hotelsAvailable = append(hotelsAvailable, hotelDto)
+		}
+	}
+
+	return hotelsAvailable, nil
 }

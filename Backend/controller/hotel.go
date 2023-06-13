@@ -57,3 +57,20 @@ func GetHotels(c *gin.Context) {
 
 	c.JSON(http.StatusOK, hotelsDto)
 }
+
+func CheckAllAvailability(c *gin.Context) {
+
+	var hotelsDto dto.HotelsDto
+
+	startDate := c.Query("start_date")
+	endDate := c.Query("end_date")
+
+	hotelsDto, err := service.Service.CheckAllAvailability(startDate, endDate)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, hotelsDto)
+}

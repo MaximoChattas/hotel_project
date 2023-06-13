@@ -24,5 +24,7 @@ func mapUrls() {
 
 	router.POST("/login", controller.UserLogin)
 
+	router.GET("/availability", controller.CheckAllAvailability)
+
 	log.Info("Finishing mappings configurations")
 }
