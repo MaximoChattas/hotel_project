@@ -35,12 +35,12 @@ function Profile() {
         <>
             <Navbar />
             <div className="descripcion">
-                <h3>Profile</h3>
-                <p>Name: {userProfile.name}</p>
-                <p>Last name: {userProfile.last_name}</p>
+                <h3>Perfil de Usuario</h3>
+                <p>Nombre: {userProfile.name}</p>
+                <p>Apellido: {userProfile.last_name}</p>
                 <p>DNI: {userProfile.dni}</p>
                 <p>Email: {userProfile.email}</p>
-                <p>ID: {userProfile.id}</p>
+                <p>Nº de Usuario: {userProfile.id}</p>
                 <div>
                     {userProfile.role === "Customer" && <button onClick={()=>navigate(reservationURL)}> Mis Reservas </button>}
                     {userProfile.role === "Customer" && <button onClick={()=>navigate("/user/reservations/range")}> Reservas por Rango </button>}

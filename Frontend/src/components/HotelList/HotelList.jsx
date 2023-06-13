@@ -34,8 +34,14 @@ const HotelList = () => {
     return <div>Error: {error}</div>;
   }
 
-  if (hotels.length === 0) {
-    return <div>Loading...</div>;
+  if (!hotels) {
+    return (
+      <>
+        <Navbar />
+        <h2>Hoteles</h2>
+        <p>No hay hoteles disponibles</p>
+      </>
+    );
   }
 
   return (

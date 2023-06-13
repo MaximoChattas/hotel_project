@@ -67,6 +67,7 @@ const AdminUserReservations = () => {
           const userReservationsFiltered = filteredReservations.filter(
             reservation => reservation.user_id === user.id
           );
+          if(user.role === "Admin") return null;
           return (
             <li key={user.id} className="list-group-item list-group-item-dark">
               <Link to={`/user/${user.id}`}>

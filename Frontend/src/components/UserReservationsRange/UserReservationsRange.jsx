@@ -22,8 +22,8 @@ const ReservationsInRange = () => {
     try {
       const startDate = format(selectedDates.startDate, "dd-MM-yyyy");
       const endDate = format(selectedDates.endDate, "dd-MM-yyyy");
-      const startTime = "15:00";
-      const endTime = "11:00";
+      const startTime = "00:00";
+      const endTime = "23:59";
       const startDateTime = `${startDate}+${startTime}`;
       const endDateTime = `${endDate}+${endTime}`;
       const url = `http://localhost:8090/user/reservations/${id}/range?start_date=${startDateTime}&end_date=${endDateTime}`;
@@ -84,7 +84,7 @@ const ReservationsInRange = () => {
   return (
     <>
       <Navbar />
-      <h2>Reservas de {reservations.user_name} {reservations.user_last_name}</h2>
+      <h2>Reservas de {userProfile.name} {userProfile.last_name}</h2>
       <h5>{formattedStartDate} - {formattedEndDate}</h5>
       <ul>
         {reservations.map(reservation => (
