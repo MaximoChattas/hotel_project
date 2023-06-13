@@ -60,6 +60,7 @@ const AdminUserReservations = () => {
       <Navbar />
       <h2>Reservas</h2>
 
+      <div className="containerReservations">
       <ul className="list-group">
         {users.map(user => {
           const filteredReservations = userReservations.reservations || [];
@@ -67,7 +68,7 @@ const AdminUserReservations = () => {
             reservation => reservation.user_id === user.id
           );
           return (
-            <li key={user.id} className="list-group-item">
+            <li key={user.id} className="list-group-item list-group-item-dark">
               <Link to={`/user/${user.id}`}>
                 <h3>{user.name} {user.last_name}</h3>
               </Link>
@@ -94,6 +95,7 @@ const AdminUserReservations = () => {
           );
         })}
       </ul>
+      </div>
     </>
   );
 };

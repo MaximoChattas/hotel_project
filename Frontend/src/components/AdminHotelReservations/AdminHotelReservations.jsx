@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { LoginContext, UserProfileContext } from '../../App';
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
+import "./AdminHotelReservations.css"
 
 const AdminHotelReservations = () => {
   const [hotelReservations, setHotelReservations] = useState({ reservations: [] });
@@ -60,6 +61,7 @@ const AdminHotelReservations = () => {
       <Navbar />
       <h2>Reservas</h2>
 
+      <div className="containerReservations">
       <ul className="list-group">
         {hotels.map(hotel => {
           const filteredReservations = hotelReservations.reservations || [];
@@ -67,7 +69,7 @@ const AdminHotelReservations = () => {
             reservation => reservation.hotel_id === hotel.id
           );
           return (
-            <li key={hotel.id} className="list-group-item">
+            <li key={hotel.id} className="list-group-item list-group-item-dark">
               <Link to={`/hotel/${hotel.id}`}>
                 <h3>{hotel.name}</h3>
               </Link>
@@ -75,7 +77,7 @@ const AdminHotelReservations = () => {
                 <ul className="list-group">
                   {hotelReservationsFiltered.map(reservation => (
                     <li key={reservation.id} className="list-group-item">
-                      <Link to={`/reservation/${reservation.id}`}>
+                      <Link to={`/reservation/${reservation.id}`} >
                         <p>Nº Reserva: {reservation.id}</p>
                       </Link>
                       <p>Inicio: {reservation.start_date}</p>
@@ -94,6 +96,7 @@ const AdminHotelReservations = () => {
           );
         })}
       </ul>
+      </div>
     </>
   );
 };

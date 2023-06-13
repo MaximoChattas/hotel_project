@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext, UserProfileContext } from '../../App';
 import Navbar from '../NavBar/NavBar';
+import "./LoadHotel.css"
 
 
 function LoadHotel() {
@@ -64,7 +65,7 @@ function LoadHotel() {
   return (
       <>
         <Navbar />
-        <div>
+        <div className="contenedorLoad">
             <h2>Cargar Hotel</h2>
             <form onSubmit={handleLoadHotel}>
             <div>
@@ -116,19 +117,17 @@ function LoadHotel() {
                     <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Enter text"
+                    placeholder="Ingrese la descripción"
                     maxLength={1000}
                     rows={4}
                     cols={50}
                     />
                     <div>
-                    Characters remaining: {1000 - description.length} / {1000}
+                    Characters disponibles: {1000 - description.length} / {1000}
                     </div>
                 </div>
               </div>
-              <button type="submit">
-                Registrate
-              </button>
+              <button type="submit">Cargar Hotel</button>
             </form>
           </div>
       </>

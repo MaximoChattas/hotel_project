@@ -9,7 +9,6 @@ function Profile() {
     const { loggedIn, setLoggedIn } = useContext(LoginContext);
     const { userProfile, setUserProfile } = useContext(UserProfileContext);
     const navigate = useNavigate();
-    const reservationURL = "/user/reservations/"+userProfile.id;
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -19,14 +18,18 @@ function Profile() {
         navigate('/');
     };
 
-    if (!userProfile) {
+    if (!loggedIn) {
         return (
             <>
                 <Navbar />
-                <p>No puedes acceder a este sitio.</p>
+                <div className="descripcion">
+                    <p>No puedes acceder a este sitio.</p>
+                </div>
             </>
         )
       }
+
+    const reservationURL = "/user/reservations/"+userProfile.id;
 
     return (
         <>
@@ -42,8 +45,6 @@ function Profile() {
                     {userProfile.role === "Customer" && <button onClick={()=>navigate(reservationURL)}> Mis Reservas </button>}
                     <button onClick={handleLogout}>Cerrar Sesión</button>
                 </div>
-            </div>
-            <div>
                 <AdminPanel />
             </div>
         </>

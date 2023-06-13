@@ -30,3 +30,8 @@
   .nav-link {
     text-decoration: none;
   }
+
+  header{
+    border-bottom: 10px white solid;
+    margin-bottom: 10px;
+  }

@@ -71,8 +71,10 @@ const UserReservations = () => {
             );
             if (hotelReservations.length > 0) {
               return (
-                <li key={hotel.id} className="list-group-item">
-                  <h3>{hotel.name}</h3>
+                <li key={hotel.id} className="list-group-item list-group-item-dark">
+                  <Link to={`/hotel/${hotel.id}`}>
+                    <h3>{hotel.name}</h3>
+                  </Link>
                   <ul className="list-group">
                     {hotelReservations.map(reservation => (
                       <li key={reservation.id} className="list-group-item">

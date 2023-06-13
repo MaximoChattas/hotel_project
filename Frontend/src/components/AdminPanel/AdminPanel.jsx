@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { LoginContext, UserProfileContext } from '../../App';
+import "./AdminPanel.css"
 
 function AdminPanel() {
     const { loggedIn } = useContext(LoginContext);
@@ -12,16 +13,16 @@ function AdminPanel() {
       }
 
       return (
-        <>
+        <div className="contenedorAdmin">
             <div>
                 <h4>Panel de Administración</h4>
             </div>
             <div>
-                <button onClick={() => navigate('/loadhotel')}>Nuevo Hotel</button>
-                <button onClick={() => navigate('/admin/reservations/hotel')}>Ver reservas por Hotel</button>
-                <button onClick={() => navigate('/admin/reservations/user')}>Ver reservas por usuario</button>
+                <button className="button" onClick={() => navigate('/loadhotel')}>Nuevo Hotel</button>
+                <button className="button" onClick={() => navigate('/admin/reservations/hotel')}>Ver reservas por Hotel</button>
+                <button className="button" onClick={() => navigate('/admin/reservations/user')}>Ver reservas por usuario</button>
             </div>
-        </>
+        </div>
       )
 
 }
