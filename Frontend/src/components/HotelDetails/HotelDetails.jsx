@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
-import Reserve from "../Reserve/Reserve";
 import Navbar from "../NavBar/NavBar";
+import Calendar from "../Calendar/Calendar";
+import Reservation from "../Reserve/Reserve";
 import "./HotelDetails.css"
 
 const HotelDetails = () => {
@@ -11,6 +12,10 @@ const HotelDetails = () => {
   const [error, setError] = useState(null);
   const { userProfile } = useContext(UserProfileContext);
   const { loggedIn } = useContext(LoginContext);
+  const [selectedDates, setSelectedDates] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
@@ -30,6 +35,10 @@ const HotelDetails = () => {
 
     fetchHotelDetails();
   }, [id]);
+
+  const handleSelectDates = (selectedRange) => {
+    setSelectedDates(selectedRange);
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -58,10 +67,19 @@ const HotelDetails = () => {
         </p>
         <p>{hotel.description}</p>
         <p>Precio por noche: ${hotel.rate}</p>
-        <Reserve hotel_id={id} hotelRate={hotel.rate}/>
+        {userProfile.role === "Customer" && (
+          <div>
+            <Calendar onSelectDates={handleSelectDates} />
+            <Reservation
+              hotel_id={id}
+              hotelRate={hotel.rate}
+              startDate={selectedDates.startDate}
+              endDate={selectedDates.endDate}
+            />
+          </div>
+        )}
       </div>
     </>
-
   );
 };
 

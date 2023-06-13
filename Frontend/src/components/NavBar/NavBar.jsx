@@ -14,6 +14,9 @@ function Navbar() {
           <h1 className="asd">MIRANDA</h1>
         </NavLink>
         <div className="contenedorBotones">
+           <NavLink className="nav-link" to="/hotel/availability">
+              <button className="boton">Ver Disponibilidad</button>
+            </NavLink>
           {loggedIn ? (
             <NavLink className="nav-link" to="/profile">
               <button className="boton">Hola {userProfile.name}</button>

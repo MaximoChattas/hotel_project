@@ -1,69 +1,43 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserProfileContext } from '../../App';
-import { DateRange } from "react-date-range";
-import { addDays, format, differenceInHours } from "date-fns";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import { format, differenceInHours } from "date-fns";
 
-const Resxerve = ({ hotel_id, hotelRate }) => {
+const Reservation = ({ hotel_id, hotelRate, startDate, endDate }) => {
   const { userProfile } = useContext(UserProfileContext);
-  const [error, setError] = useState('');
-  const [ reservation, setReservation ] = useState(null);
-  const navigate = useNavigate();
-  
-  // date state
-  const [range, setRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-
+  const [error, setError] = useState("");
   const [reservationSaved, setReservationSaved] = useState(false);
-
-  const handleSelectDates = (ranges) => {
-    setRange([ranges.selection]);
-  };
+  const navigate = useNavigate();
 
   const calculateAmount = () => {
-    const start_date = range[0].startDate;
-    const end_date = range[0].endDate;
-
-    // Calculate check-in and checkout dates with the desired times
-    const checkInDate = new Date(start_date);
+    const checkInDate = new Date(startDate);
     checkInDate.setHours(15, 0, 0, 0);
 
-    const checkoutDate = new Date(end_date);
+    const checkoutDate = new Date(endDate);
     checkoutDate.setHours(11, 0, 0, 0);
 
     const hours = differenceInHours(checkoutDate, checkInDate);
-    const nights = Math.ceil(hours / 24)
+    const nights = Math.ceil(hours / 24);
     let amount = nights * hotelRate;
-    amount = amount.toFixed(2); //Limit to 2 decimals
-    amount = parseFloat(amount).toLocaleString(); //Thousand separators
+    amount = amount.toFixed(2);
+    amount = parseFloat(amount).toLocaleString();
 
     return amount;
   };
 
   const handleReservation = async () => {
-    const start_date = range[0].startDate;
-    const end_date = range[0].endDate;
-
-    // Calculate check-in and checkout dates with the desired times
-    const checkInDate = new Date(start_date);
+    const checkInDate = new Date(startDate);
     checkInDate.setHours(15, 0, 0, 0);
 
-    const checkoutDate = new Date(end_date);
+    const checkoutDate = new Date(endDate);
     checkoutDate.setHours(11, 0, 0, 0);
 
     try {
       const reservationData = {
         user_id: parseInt(userProfile.id),
         hotel_id: parseInt(hotel_id),
-        start_date: format(checkInDate, "dd-MM-yyy HH:mm"),
-        end_date: format(checkoutDate, "dd-MM-yyy HH:mm"),
+        start_date: format(checkInDate, "dd-MM-yyyy HH:mm"),
+        end_date: format(checkoutDate, "dd-MM-yyyy HH:mm"),
       };
 
       const response = await fetch("http://localhost:8090/reserve", {
@@ -77,12 +51,11 @@ const Resxerve = ({ hotel_id, hotelRate }) => {
       if (response.ok) {
         setReservationSaved(true);
         const data = await response.json();
-        setReservation(data);
-        const url = "/reservation/"+data.id;
+        const url = "/reservation/" + data.id;
         navigate(url);
       } else {
         const data = await response.json();
-        const errorMessage = data.error || 'Error';
+        const errorMessage = data.error || "Error";
         throw new Error(errorMessage);
       }
     } catch (error) {
@@ -91,7 +64,6 @@ const Resxerve = ({ hotel_id, hotelRate }) => {
     }
   };
 
-  const today = new Date();
   const amount = calculateAmount();
 
   if (userProfile.role === "Admin") {
@@ -99,28 +71,14 @@ const Resxerve = ({ hotel_id, hotelRate }) => {
   }
 
   return (
-    <>
-      <div className="calendarWrap">
-        <DateRange
-          ranges={range}
-          onChange={handleSelectDates}
-          editableDateInputs={true}
-          moveRangeOnFirstSelection={false}
-          months={2}
-          minDate={today}
-          direction="horizontal"
-          className="calendarElement"
-        />
-      </div>
-      <div>
-        <p>Total: ${amount}</p>
-        <button onClick={handleReservation}>
-          Reservar
-        </button>
-        {error && <p className="error-message">{error}</p>}
-      </div>
-    </>
+    <div>
+      <p>Total: ${amount}</p>
+      <button onClick={handleReservation} disabled={reservationSaved}>
+        {reservationSaved ? "Reserved" : "Reserve"}
+      </button>
+      {error && <p className="error-message">{error}</p>}
+    </div>
   );
 };
 
-export default Reserve;
+export default Reservation;
