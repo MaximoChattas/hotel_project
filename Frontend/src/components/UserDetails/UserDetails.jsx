@@ -49,12 +49,15 @@ const UserDetails = () => {
 
   return (
     <>
+
       <Navbar />
-      <h1>Perfil de Usuario</h1>
-      <h2>{user.name} {user.last_name}</h2>
-      <p>Número de usuario: {user.id}</p>
-      <p>Email: {user.email}</p>
-    </>
+      <div className="UserDetalle">
+        <h1>Perfil de Usuario</h1>
+        <h2>{user.name} {user.last_name}</h2>
+        <p>Número de usuario: {user.id}</p>
+        <p>Email: {user.email}</p>
+      </div>
+      </>
   );
 };
 

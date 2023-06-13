@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
 import { LoginContext } from '../../App';
+import "./HotelList.css"
 
 const HotelList = () => {
   const [hotels, setHotels] = useState([]);

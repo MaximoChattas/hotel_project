@@ -11,6 +11,7 @@ import LoadHotel from "./components/LoadHotel/LoadHotel";
 import AdminHotelReservations from "./components/AdminHotelReservations/AdminHotelReservations";
 import AdminUserReservations from "./components/AdminUserReservations/AdminUserReservations";
 import UserDetails from "./components/UserDetails/UserDetails";
+import "./App.css"
 
 // Create the LoginContext
 export const LoginContext = React.createContext();
@@ -23,7 +24,7 @@ const App = () => {
   const [userProfile, setUserProfile] = useState(null);
 
   return (
-    <div>
+    <div className="menu">
       <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
         <UserProfileContext.Provider value={{ userProfile, setUserProfile }}>
           <Routes>

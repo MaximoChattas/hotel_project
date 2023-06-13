@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UserProfileContext } from '../../App';
+import "./ReservationDetail.css"
 
 import Navbar from "../NavBar/NavBar";
 
@@ -61,19 +62,21 @@ const ReservationDetails = () => {
   return (
     <>
       <Navbar />
-      <h2>Reserva {id}</h2>
-      {hotel && (
-        <>
-          <Link to={`/hotel/${hotel.id}`}>
-                {hotel.name}
-            </Link>
-          <h6>{hotel.street_name} {hotel.street_number}</h6>
-        </>
-      )}
-      <p>Inicio: {reservation.start_date}</p>
-      <p>Fin: {reservation.end_date}</p>
-      <p>Costo: ${reservation.amount}</p>
-    </>
+      <div className="Detalles">
+        <h2>Reserva {id}</h2>
+        {hotel && (
+          <>
+            <Link to={`/hotel/${hotel.id}`}>
+                  {hotel.name}
+              </Link>
+            <h6>{hotel.street_name} {hotel.street_number}</h6>
+          </>
+        )}
+        <p>Inicio: {reservation.start_date}</p>
+        <p>Fin: {reservation.end_date}</p>
+        <p>Costo: ${reservation.amount}</p>
+      </div>
+      </>
   );
   
   

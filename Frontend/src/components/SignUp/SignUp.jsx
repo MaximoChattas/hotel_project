@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../NavBar/NavBar';
+import "./SignUp.css"
 
 function Signup() {
 
@@ -49,7 +50,7 @@ function Signup() {
   return (
       <>
         <Navbar />
-        <div>
+        <div className="Registro">
             <h2>Registrate</h2>
             <form onSubmit={handleSignup}>
             <div>

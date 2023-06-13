@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { LoginContext, UserProfileContext } from '../../App';
-import Style from '../NavBar/NavBar.css'
+import'./NavBar.css';
 
 function Navbar() {
   const { loggedIn } = useContext(LoginContext);

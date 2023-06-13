@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import Navbar from '../NavBar/NavBar';
+import './Login.css'
 import { LoginContext, UserProfileContext } from '../../App';
 
 function Login() {
@@ -63,35 +64,37 @@ function Login() {
     <UserProfileContext.Provider value={{ userProfile, setUserProfile }}>
       <>
         <Navbar />
-        <div>
-            <h2>Inicio de Sesion</h2>
-            <form onSubmit={handleLogin}>
-              <div>
-                <label>Email:</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+        <div className="contenedorLogin">
+          <div>
+              <h2>Inicio de Sesion</h2>
+              <form onSubmit={handleLogin}>
+                <div>
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Password:</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                {error && <p className="error-message">{error}</p>}
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Cargando...' : 'Iniciar Sesion'}
+                </button>
+              </form>
               </div>
               <div>
-                <label>Password:</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              {error && <p className="error-message">{error}</p>}
-              <button type="submit" disabled={loading}>
-                {loading ? 'Cargando...' : 'Iniciar Sesion'}
-              </button>
-            </form>
+              <p>¿Aun no tienes una cuenta?</p>
+              <button onClick={()=>navigate('/signup')}>Registrate</button>
             </div>
-            <div>
-            <p>¿Aun no tienes una cuenta?</p>
-            <button onClick={()=>navigate('/signup')}>Registrate</button>
-          </div>
+        </div>
       </>
     </UserProfileContext.Provider>
   </LoginContext.Provider>

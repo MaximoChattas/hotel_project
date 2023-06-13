@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  background-color: #333333;
   }
   
   .boton {
@@ -11,6 +12,8 @@
     color: rgb(0, 0, 0);
     cursor: pointer;
   }
+
+
   
   .contenedorBotones {
     padding: 10px;
@@ -21,7 +24,7 @@
   
   .asd {
     padding-left: 5px;
-    color: #000000;
+    color: yellow;
   }
   
   .nav-link {
