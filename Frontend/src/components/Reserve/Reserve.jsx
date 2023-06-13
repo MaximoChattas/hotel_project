@@ -6,8 +6,9 @@ import { addDays, format, differenceInHours } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
-const Calendar = ({ hotel_id, hotelRate }) => {
+const Resxerve = ({ hotel_id, hotelRate }) => {
   const { userProfile } = useContext(UserProfileContext);
+  const [error, setError] = useState('');
   const [ reservation, setReservation ] = useState(null);
   const navigate = useNavigate();
   
@@ -116,9 +117,10 @@ const Calendar = ({ hotel_id, hotelRate }) => {
         <button onClick={handleReservation}>
           Reservar
         </button>
+        {error && <p className="error-message">{error}</p>}
       </div>
     </>
   );
 };
 
-export default Calendar;
+export default Reserve;

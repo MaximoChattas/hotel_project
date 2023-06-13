@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
-import Calendar from "../Calendar/Calendar";
+import Reserve from "../Reserve/Reserve";
 import Navbar from "../NavBar/NavBar";
 
 const UserDetails = () => {
