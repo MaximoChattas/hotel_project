@@ -25,6 +25,7 @@ type serviceInterface interface {
 	GetReservationById(id int) (dto.ReservationDto, error)
 	GetReservations() (dto.ReservationsDto, error)
 	GetReservationsByUser(userId int) (dto.UserReservationsDto, error)
+	GetReservationsByUserRange(userId int, startDate string, endDate string) (dto.ReservationsDto, error)
 	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error)
 
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool
@@ -299,6 +300,46 @@ func (s *service) GetReservationsByUser(userId int) (dto.UserReservationsDto, er
 	userReservationsDto.Reservations = reservationsDto
 
 	return userReservationsDto, nil
+}
+
+func (s *service) GetReservationsByUserRange(userId int, startDate string, endDate string) (dto.ReservationsDto, error) {
+
+	var reservationsInRange dto.ReservationsDto
+
+	rangeStart, _ := time.Parse("02-01-2006 15:04", startDate)
+	rangeEnd, _ := time.Parse("02-01-2006 15:04", endDate)
+
+	if rangeStart.After(rangeEnd) {
+		return reservationsInRange, errors.New("a reservation cant end before it starts")
+	}
+
+	reservations := client.GetReservationsByUser(userId)
+
+	for _, reservation := range reservations {
+
+		reservationStart, _ := time.Parse("02-01-2006 15:04", reservation.StartDate)
+		reservationEnd, _ := time.Parse("02-01-2006 15:04", reservation.EndDate)
+
+		if reservationStart.After(rangeStart) && reservationEnd.Before(rangeEnd) ||
+			reservationStart.Before(rangeStart) && reservationEnd.After(rangeEnd) ||
+			reservationStart.Before(rangeEnd) && reservationEnd.After(rangeEnd) ||
+			reservationStart.Before(rangeStart) && reservationEnd.After(rangeEnd) ||
+			reservationStart.Equal(rangeStart) || reservationEnd.Equal(rangeEnd) {
+
+			var reservationDto dto.ReservationDto
+
+			reservationDto.Id = reservation.Id
+			reservationDto.StartDate = reservation.StartDate
+			reservationDto.EndDate = reservation.EndDate
+			reservationDto.Amount = reservation.Amount
+			reservationDto.UserId = reservation.UserId
+			reservationDto.HotelId = reservation.HotelId
+
+			reservationsInRange = append(reservationsInRange, reservationDto)
+		}
+	}
+
+	return reservationsInRange, nil
 }
 
 func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error) {

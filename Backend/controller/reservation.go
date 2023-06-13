@@ -72,6 +72,24 @@ func GetReservationsByUser(c *gin.Context) {
 	c.JSON(http.StatusOK, userReservations)
 }
 
+func GetReservationsByUserRange(c *gin.Context) {
+
+	var reservationsDto dto.ReservationsDto
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	startDate := c.Query("start_date")
+	endDate := c.Query("end_date")
+
+	reservationsDto, err := service.Service.GetReservationsByUserRange(id, startDate, endDate)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, reservationsDto)
+}
+
 func GetReservationsByHotel(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var hotelReservations dto.HotelReservationsDto
