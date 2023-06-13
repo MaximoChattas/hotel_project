@@ -77,7 +77,7 @@ function Login() {
                   />
                 </div>
                 <div>
-                  <label>Password:</label>
+                  <label>Clave:</label>
                   <input
                     type="password"
                     value={password}
