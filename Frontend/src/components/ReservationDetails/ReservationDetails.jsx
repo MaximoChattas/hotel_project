@@ -67,7 +67,7 @@ const ReservationDetails = () => {
         {hotel && (
           <>
             <Link to={`/hotel/${hotel.id}`}>
-                  {hotel.name}
+              <h4>{hotel.name}</h4>
               </Link>
             <h6>{hotel.street_name} {hotel.street_number}</h6>
           </>

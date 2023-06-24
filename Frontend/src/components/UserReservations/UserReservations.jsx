@@ -3,6 +3,7 @@ import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
+import "./UserReservations.css"
 
 const UserReservations = () => {
   const { id } = useParams();
@@ -61,42 +62,46 @@ const UserReservations = () => {
    return (
     <>
       <Navbar />
-      <h2>Reservas de {userReservations.user_name} {userReservations.user_last_name}</h2>
-  
-      {userReservations.reservations ? (
-        <ul className="list-group">
-          {hotels.map(hotel => {
-            const hotelReservations = userReservations.reservations.filter(
-              reservation => reservation.hotel_id === hotel.id
-            );
-            if (hotelReservations.length > 0) {
-              return (
-                <li key={hotel.id} className="list-group-item list-group-item-dark">
-                  <Link to={`/hotel/${hotel.id}`}>
-                    <h3>{hotel.name}</h3>
-                  </Link>
-                  <ul className="list-group">
-                    {hotelReservations.map(reservation => (
-                      <li key={reservation.id} className="list-group-item">
-                        <Link to={`/reservation/${reservation.id}`}>
-                          Nº Reserva: {reservation.id}
-                        </Link>
-                        <p>Inicio: {reservation.start_date}</p>
-                        <p>Fin: {reservation.end_date}</p>
-                        <p>Costo: {reservation.amount}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
+
+      <div className="fullscreen">
+        <h2>Reservas de {userReservations.user_name} {userReservations.user_last_name}</h2>
+
+        {userReservations.reservations ? (
+          <ul className="list-group">
+            {hotels.map(hotel => {
+              const hotelReservations = userReservations.reservations.filter(
+                reservation => reservation.hotel_id === hotel.id
               );
-            } else {
-              return null;
-            }
-          })}
-        </ul>
-      ) : (
-        <p>No tiene ninguna reserva.</p>
-      )}
+              if (hotelReservations.length > 0) {
+                return (
+                  <li key={hotel.id} className="list-group-item list-group-item-dark">
+                    <Link to={`/hotel/${hotel.id}`}>
+                      <h3>{hotel.name}</h3>
+                    </Link>
+                    <ul className="list-group">
+                      {hotelReservations.map(reservation => (
+                        <li key={reservation.id} className="list-group-item">
+                          <Link to={`/reservation/${reservation.id}`}>
+                            Nº Reserva: {reservation.id}
+                          </Link>
+                          <p>Inicio: {reservation.start_date}</p>
+                          <p>Fin: {reservation.end_date}</p>
+                          <p>Costo: {reservation.amount}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+
+                );
+              } else {
+                return null;
+              }
+            })}
+          </ul>
+        ) : (
+          <p>No tiene ninguna reserva.</p>
+        )}
+      </div>
     </>
   );  
   

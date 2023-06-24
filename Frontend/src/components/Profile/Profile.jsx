@@ -42,9 +42,9 @@ function Profile() {
                 <p>Email: {userProfile.email}</p>
                 <p>Nº de Usuario: {userProfile.id}</p>
                 <div>
-                    {userProfile.role === "Customer" && <button onClick={()=>navigate(reservationURL)}> Mis Reservas </button>}
-                    {userProfile.role === "Customer" && <button onClick={()=>navigate("/user/reservations/range")}> Reservas por Rango </button>}
-                    <button onClick={handleLogout}>Cerrar Sesión</button>
+                    {userProfile.role === "Customer" && <button className="button" onClick={()=>navigate(reservationURL)}> Mis Reservas </button>}
+                    {userProfile.role === "Customer" && <button className="button" onClick={()=>navigate("/user/reservations/range")}> Reservas por Rango </button>}
+                    <button className="button" onClick={handleLogout}>Cerrar Sesión</button>
                 </div>
                 <AdminPanel />
             </div>

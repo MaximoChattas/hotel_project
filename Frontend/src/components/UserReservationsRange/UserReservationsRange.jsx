@@ -4,6 +4,7 @@ import { LoginContext, UserProfileContext } from '../../App';
 import Navbar from "../NavBar/NavBar";
 import Calendar from "../Calendar/Calendar";
 import { format } from "date-fns";
+import "./UserReservationsRange.css"
 
 const ReservationsInRange = () => {
   const [reservations, setReservations] = useState([]);
@@ -15,6 +16,15 @@ const ReservationsInRange = () => {
 
   const { loggedIn } = useContext(LoginContext);
   const { userProfile } = useContext(UserProfileContext);
+
+    if (!loggedIn) {
+        return (
+            <>
+                <Navbar />
+                <p className="fullscreen">No puedes acceder a este sitio.</p>
+            </>
+        )
+    }
 
   const id = userProfile.id;
 
@@ -49,20 +59,11 @@ const ReservationsInRange = () => {
   const formattedStartDate = format(selectedDates.startDate, "dd/MM/yyyy");
   const formattedEndDate = format(selectedDates.endDate, "dd/MM/yyyy");
 
-  if (!loggedIn || (id !== userProfile.id)) {
-    return (
-        <>
-            <Navbar />
-            <p>No puedes acceder a este sitio.</p>
-        </>
-    )
-   }
-
    if (!reservations) {
     return (
         <>
             <Navbar />
-            <p>No tienes reservas en el rango de fechas seleccionado.</p>
+            <p className="fullscreen">No tienes reservas en el rango de fechas seleccionado.</p>
         </>
     )
    }
@@ -71,12 +72,14 @@ const ReservationsInRange = () => {
     return (
       <>
         <Navbar />
-        <h2>Ver Reservas</h2>
-        <p>
-          Seleccione un rango de fechas en el calendario para ver sus reservas.
-        </p>
-        <Calendar onSelectDates={handleSelectDates} />
-        <button onClick={fetchReservations}>Ver</button>
+        <div className="fullscreen">
+            <h2>Ver Reservas</h2>
+            <p>
+              Seleccione un rango de fechas en el calendario para ver sus reservas.
+            </p>
+            <Calendar onSelectDates={handleSelectDates} />
+            <button onClick={fetchReservations} className="button">Ver</button>
+        </div>
       </>
     );
   }
@@ -84,20 +87,22 @@ const ReservationsInRange = () => {
   return (
     <>
       <Navbar />
+      <div className="fullscreen">
       <h2>Reservas de {userProfile.name} {userProfile.last_name}</h2>
       <h5>{formattedStartDate} - {formattedEndDate}</h5>
-      <ul>
-        {reservations.map(reservation => (
-            <li key={reservation.id} className="list-group-item list-group-item-dark">
-            <Link to={`/reservation/${reservation.id}`}>
-                Nº Reserva: {reservation.id}
-            </Link>
-            <p>Inicio: {reservation.start_date}</p>
-            <p>Fin: {reservation.end_date}</p>
-            <p>Costo: {reservation.amount}</p>
-            </li>
-    ))}
-        </ul>
+          <ul>
+            {reservations.map(reservation => (
+                <li key={reservation.id} className="list-group-item list-group-item-dark">
+                <Link to={`/reservation/${reservation.id}`}>
+                    Nº Reserva: {reservation.id}
+                </Link>
+                <p>Inicio: {reservation.start_date}</p>
+                <p>Fin: {reservation.end_date}</p>
+                <p>Costo: {reservation.amount}</p>
+                </li>
+        ))}
+            </ul>
+      </div>
 
     </>
   );

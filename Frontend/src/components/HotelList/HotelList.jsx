@@ -31,7 +31,12 @@ const HotelList = () => {
   }, []);
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+        <>
+          <Navbar />
+          <div className="fullscreen">Error: {error}</div>
+        </>
+    );
   }
 
   if (!hotels) {
@@ -39,7 +44,7 @@ const HotelList = () => {
       <>
         <Navbar />
         <h2>Hoteles</h2>
-        <p>No hay hoteles disponibles</p>
+        <p className="fullscreen">No hay hoteles disponibles</p>
       </>
     );
   }

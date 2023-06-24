@@ -44,17 +44,29 @@ const HotelAvailable = () => {
     setSelectedDates(selectedRange);
   };
 
+  if (!hotels) {
+    return (
+        <>
+          <Navbar />
+          <h2>Hoteles Disponibles</h2>
+          <p className="fullscreen">No hay hoteles disponibles</p>
+        </>
+    );
+  }
+
   if (hotels.length === 0) {
     return (
       <>
         <Navbar />
-        <h2>Verificar Disponibilidad</h2>
-        <p>
-          Seleccione un rango de fechas en el calendario para verificar los hoteles
-          disponibles
-        </p>
-        <Calendar onSelectDates={handleSelectDates} />
-        <button onClick={fetchHotels}>Verificar</button>
+        <div className="fullscreen">
+          <h2>Verificar Disponibilidad</h2>
+          <p>
+            Seleccione un rango de fechas en el calendario para verificar los hoteles
+            disponibles
+          </p>
+          <Calendar onSelectDates={handleSelectDates} />
+          <button onClick={fetchHotels} style={{ marginTop: '20px' }}>Verificar</button>
+        </div>
       </>
     );
   }
