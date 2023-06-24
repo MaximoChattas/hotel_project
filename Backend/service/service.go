@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"golang.org/x/crypto/bcrypt"
 	"math"
 	"project/client"
 	"project/dto"
@@ -46,17 +47,24 @@ func init() {
 func (s *service) InsertUser(userDto dto.UserDto) (dto.UserDto, error) {
 	var user model.User
 
+	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(userDto.Password), bcrypt.DefaultCost)
+
+	if err != nil {
+		return userDto, err
+	}
+
 	user.Name = userDto.Name
 	user.LastName = userDto.LastName
 	user.Dni = userDto.Dni
 	user.Email = userDto.Email
-	user.Password = userDto.Password
+	user.Password = string(encryptedPassword)
 	user.Role = "Customer"
 
 	user = client.InsertUser(user)
 
 	userDto.Id = user.Id
 	userDto.Role = user.Role
+	userDto.Password = user.Password
 
 	if user.Id == 0 {
 		return userDto, errors.New("error creating user")
@@ -112,15 +120,21 @@ func (s *service) UserLogin(loginDto dto.UserDto) (dto.UserDto, error) {
 		return loginDto, errors.New("user not registered")
 	}
 
-	if user.Password != loginDto.Password {
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginDto.Password))
+	if err != nil {
+		// Passwords don't match
 		return loginDto, errors.New("incorrect password")
 	}
-	loginDto.Id = user.Id
-	loginDto.Name = user.Name
-	loginDto.LastName = user.LastName
-	loginDto.Dni = user.Dni
-	loginDto.Role = user.Role
-	return loginDto, nil
+
+	var userDto dto.UserDto
+
+	userDto.Id = user.Id
+	userDto.Name = user.Name
+	userDto.LastName = user.LastName
+	userDto.Dni = user.Dni
+	userDto.Email = user.Email
+	userDto.Role = user.Role
+	return userDto, nil
 }
 
 func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
