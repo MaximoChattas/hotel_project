@@ -67,12 +67,16 @@ const HotelDetails = () => {
         </h3>
         <p>{hotel.description}</p>
         <h5>Precio por noche: ${hotel.rate}</h5>
-        <h4>Amenities:</h4>
-        <ul className="list">
-          {hotel.amenities.map((amenity) => (
-              <li key={amenity}>{amenity}</li>
-          ))}
-        </ul>
+        {hotel.amenities && (
+            <div>
+              <h4>Amenities:</h4>
+              <ul className="list">
+                {hotel.amenities.map((amenity) => (
+                    <li key={amenity}>{amenity}</li>
+                ))}
+              </ul>
+            </div>
+        )}
 
         {userProfile.role === "Customer" && (
           <div>

@@ -50,7 +50,7 @@ function Signup() {
   return (
       <>
         <Navbar />
-        <div className="Registro">
+        <div className="contenedorSignup">
             <h2>Registrate</h2>
             <form onSubmit={handleSignup}>
             <div>

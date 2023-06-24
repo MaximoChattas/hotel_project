@@ -5,11 +5,9 @@
     height: 100vh;
 }
 
-input{
-    background-color: rgb(224, 224, 224);
-  }
-
-  textarea{
+.contenedorLogin input{
+    width: 30%;
+    margin: 10px;
     background-color: rgb(224, 224, 224);
   }
 
