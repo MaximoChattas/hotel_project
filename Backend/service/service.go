@@ -28,6 +28,9 @@ type serviceInterface interface {
 	GetReservationsByUserRange(userId int, startDate string, endDate string) (dto.ReservationsDto, error)
 	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error)
 
+	InsertAmenity(amenityDto dto.AmenityDto) (dto.AmenityDto, error)
+	GetAmenities() (dto.AmenitiesDto, error)
+
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool
 	CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error)
 }
@@ -130,6 +133,17 @@ func (s *service) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
 	hotel.StreetNumber = hotelDto.StreetNumber
 	hotel.Rate = hotelDto.Rate
 
+	for _, amenityName := range hotelDto.Amenities {
+		amenity := client.GetAmenityByName(amenityName)
+
+		if amenity.Id == 0 {
+			return hotelDto, errors.New("amenity not found")
+		}
+
+		hotel.Amenities = append(hotel.Amenities, amenity)
+
+	}
+
 	hotel = client.InsertHotel(hotel)
 
 	hotelDto.Id = hotel.Id
@@ -177,6 +191,10 @@ func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
 	hotelDto.StreetName = hotel.StreetName
 	hotelDto.StreetNumber = hotel.StreetNumber
 	hotelDto.Rate = hotel.Rate
+
+	for _, amenity := range hotel.Amenities {
+		hotelDto.Amenities = append(hotelDto.Amenities, amenity.Name)
+	}
 
 	return hotelDto, nil
 }
@@ -376,6 +394,37 @@ func (s *service) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto,
 	hotelReservations.Reservations = reservationsDto
 
 	return hotelReservations, nil
+}
+
+func (s *service) InsertAmenity(amenityDto dto.AmenityDto) (dto.AmenityDto, error) {
+	var amenity model.Amenity
+
+	amenity.Name = amenityDto.Name
+
+	amenity = client.InsertAmenity(amenity)
+
+	if amenity.Id == 0 {
+		return amenityDto, errors.New("error creating amenity")
+	}
+
+	amenityDto.Id = amenity.Id
+
+	return amenityDto, nil
+}
+
+func (s *service) GetAmenities() (dto.AmenitiesDto, error) {
+	var amenities model.Amenities = client.GetAmenities()
+	var amenitiesDto dto.AmenitiesDto
+
+	for _, amenity := range amenities {
+		var amenityDto dto.AmenityDto
+		amenityDto.Id = amenity.Id
+		amenityDto.Name = amenity.Name
+
+		amenitiesDto = append(amenitiesDto, amenityDto)
+	}
+
+	return amenitiesDto, nil
 }
 
 func (s *service) CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool {
