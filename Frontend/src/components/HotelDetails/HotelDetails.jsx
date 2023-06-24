@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LoginContext, UserProfileContext } from '../../App';
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
 import Calendar from "../Calendar/Calendar";
 import Reservation from "../Reserve/Reserve";
@@ -62,13 +62,21 @@ const HotelDetails = () => {
       <Navbar />
       <div className="descripcion">
         <h1>{hotel.name}</h1>
-        <p>
+        <h3>
           {hotel.street_name} {hotel.street_number}
-        </p>
+        </h3>
         <p>{hotel.description}</p>
-        <p>Precio por noche: ${hotel.rate}</p>
+        <h5>Precio por noche: ${hotel.rate}</h5>
+        <h4>Amenities:</h4>
+        <ul className="list">
+          {hotel.amenities.map((amenity) => (
+              <li key={amenity}>{amenity}</li>
+          ))}
+        </ul>
+
         {userProfile.role === "Customer" && (
           <div>
+            <h2>Reservar</h2>
             <Calendar onSelectDates={handleSelectDates} />
             <Reservation
               hotel_id={id}

@@ -74,7 +74,7 @@ const Reservation = ({ hotel_id, hotelRate, startDate, endDate }) => {
     <div>
       <p>Total: ${amount}</p>
       <button onClick={handleReservation} disabled={reservationSaved}>
-        {reservationSaved ? "Reserved" : "Reserve"}
+        {reservationSaved ? "Reservado" : "Reservar"}
       </button>
       {error && <p className="error-message">{error}</p>}
     </div>
