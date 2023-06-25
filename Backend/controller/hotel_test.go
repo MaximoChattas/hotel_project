@@ -16,32 +16,74 @@ import (
 	"testing"
 )
 
+//REMEMBER TO CHANGE DB CONNECTION BEFORE EXECUTING TESTS
+//db_name: miranda_test
+//THESE TEST CLEAR THE "hotels" TABLE
+
 type TestSuiteEnv struct {
 	suite.Suite
 	DB *gorm.DB
 }
 
-// Tests are run before they start
+// Running before all tests are completed
 func (suite *TestSuiteEnv) SetupSuite() {
 	db.StartDbEngine()
 	suite.DB = db.Db
-}
 
-// Running after each test
-func (suite *TestSuiteEnv) TearDownTest() {
-	suite.DB.Delete(&model.Hotel{})
-	suite.DB.Exec("ALTER SEQUENCE hotels_id_seq RESTART WITH 1")
+	db.Db.Delete(&model.Hotel{})
+	db.Db.DropTable(&model.Hotel{})
+	db.Db.AutoMigrate(&model.Hotel{})
 }
 
 // Running after all tests are completed
 func (suite *TestSuiteEnv) TearDownSuite() {
+	db.Db.Delete(&model.Hotel{})
+	db.Db.DropTable(&model.Hotel{})
+	db.Db.AutoMigrate(&model.Hotel{})
 	suite.DB.Close()
 }
 
-// This gets run automatically by `go test` so we call `suite.Run` inside it
 func TestSuite(t *testing.T) {
-	// This is what actually runs our suite
 	suite.Run(t, new(TestSuiteEnv))
+}
+
+func TestInsertHotel(t *testing.T) {
+	a := assert.New(t)
+
+	r := gin.Default()
+	r.POST("/hotel", InsertHotel)
+
+	body := `{
+        "name": "Hotel Test",
+        "room_amount": 10,
+        "description": "Test hotel description",
+        "street_name": "Test Street",
+        "street_number": 123,
+        "rate": 4.5
+    }`
+
+	req, err := http.NewRequest(http.MethodPost, "/hotel", strings.NewReader(body))
+	if err != nil {
+		log.Fatalf("New request failed: %v", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+
+	c, _ := gin.CreateTestContext(w)
+	c.Request = req
+
+	r.ServeHTTP(w, req)
+
+	a.Equal(http.StatusCreated, w.Code)
+
+	var response dto.HotelDto
+	err = json.Unmarshal(w.Body.Bytes(), &response)
+	if err != nil {
+		log.Fatalf("Failed to unmarshal response: %v", err)
+	}
+
+	a.NotEqual(0, response.Id)
 }
 
 func TestGetHotelById_NotFound(t *testing.T) {
@@ -95,6 +137,9 @@ func TestGetHotelById_Found(t *testing.T) {
 
 	a.Equal(http.StatusOK, w.Code)
 
+	db.Db.DropTable(&model.Hotel{})
+	db.Db.AutoMigrate(&model.Hotel{})
+
 }
 
 func TestCheckAllAvailability(t *testing.T) {
@@ -122,48 +167,4 @@ func TestCheckAllAvailability(t *testing.T) {
 	expectedResponse := `{"error":"a reservation cant end before it starts"}`
 
 	a.Equal(w.Body.String(), expectedResponse)
-}
-
-func TestInsertHotel(t *testing.T) {
-	a := assert.New(t)
-
-	r := gin.Default()
-	r.POST("/hotel", InsertHotel)
-
-	// Create a JSON body for the request body
-	body := `{
-        "name": "Hotel Test",
-        "room_amount": 10,
-        "description": "Test hotel description",
-        "street_name": "Test Street",
-        "street_number": 123,
-        "rate": 4.5
-    }`
-
-	req, err := http.NewRequest(http.MethodPost, "/hotel", strings.NewReader(body))
-	if err != nil {
-		log.Fatalf("New request failed: %v", err)
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	w := httptest.NewRecorder()
-
-	c, _ := gin.CreateTestContext(w)
-	c.Request = req
-
-	r.ServeHTTP(w, req)
-
-	a.Equal(http.StatusCreated, w.Code)
-
-	// Get the hotel DTO from the response
-	var response dto.HotelDto
-	err = json.Unmarshal(w.Body.Bytes(), &response)
-	if err != nil {
-		log.Fatalf("Failed to unmarshal response: %v", err)
-	}
-
-	// Assert that the hotel ID is not 0
-	a.NotEqual(0, response.Id)
-
-	db.Db.Delete(&model.Hotel{}, response.Id)
 }
