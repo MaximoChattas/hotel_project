@@ -41,6 +41,7 @@ func StartDbEngine() {
 	Db.AutoMigrate(&model.Reservation{})
 	Db.AutoMigrate(&model.User{})
 	Db.AutoMigrate(&model.Amenity{})
+	Db.AutoMigrate(&model.Image{})
 
 	log.Info("Finishing Migration Database Tables")
 }
