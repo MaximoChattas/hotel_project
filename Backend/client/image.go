@@ -14,8 +14,25 @@ func InsertImage(image model.Image) model.Image {
 		return image
 	}
 
-	log.Debug("Hotel created:", image.Id)
+	log.Debug("Image created:", image.Id)
 	return image
+}
+
+func InsertImages(images model.Images) model.Images {
+
+	for i := range images {
+		result := Db.Create(&images[i])
+
+		if result.Error != nil {
+			log.Error("Failed to insert image.")
+			return images
+		}
+
+		id := images[i].Id
+		Db.First(&images[i], id)
+	}
+
+	return images
 }
 
 func GetImageById(id int) model.Image {
