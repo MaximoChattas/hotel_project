@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91ea1ab9-7101-4444-b95d-47d970800ea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Frontend/src/components/LoadAmenity/LoadAmenity.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Frontend/src/components/LoadAmenity/LoadAmenity.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/dto/image.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/model/image.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/db/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/db/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/service/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/AdminPanel/AdminPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/AdminPanel/AdminPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/LoadHotel/LoadHotel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/LoadHotel/LoadHotel.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
