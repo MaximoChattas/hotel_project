@@ -90,7 +90,7 @@ function LoadHotel() {
         return (
             <>
                 <Navbar />
-                <p>No puedes acceder a este sitio.</p>
+                <p className="contenedorLoad">No puedes acceder a este sitio.</p>
             </>
         );
     }
@@ -147,6 +147,7 @@ function LoadHotel() {
                             </div>
                         </div>
                     </div>
+                    {amenities &&
                     <div>
                         <h5>Amenities:</h5>
                         {amenities.map((amenity) => (
@@ -161,6 +162,7 @@ function LoadHotel() {
                             </div>
                         ))}
                     </div>
+                    }
                     {error && <p className="error-message">{error}</p>}
                     <button type="submit">Cargar Hotel</button>
                 </form>

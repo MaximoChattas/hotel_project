@@ -14,6 +14,7 @@ import UserDetails from "./components/UserDetails/UserDetails";
 import "./App.css"
 import HotelAvailable from "./components/HotelAvailable/HotelAvailable";
 import UserReservationsRange from "./components/UserReservationsRange/UserReservationsRange";
+import LoadAmenity from "./components/LoadAmenity/LoadAmenity.jsx";
 
 // Create the LoginContext
 export const LoginContext = React.createContext();
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/admin/reservations/hotel" element={<AdminHotelReservations />} />
             <Route path="/admin/reservations/user" element={<AdminUserReservations />} />
             <Route path="/hotel/availability" element={<HotelAvailable />} />
+            <Route path="/loadamenity" element={<LoadAmenity />} />
           </Routes>
         </UserProfileContext.Provider>
       </LoginContext.Provider>

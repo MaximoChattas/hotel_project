@@ -19,6 +19,7 @@ function AdminPanel() {
             </div>
             <div>
                 <button className="button" onClick={() => navigate('/loadhotel')}>Nuevo Hotel</button>
+                <button className="button" onClick={() => navigate('/loadamenity')}>Nuevo Amenity</button>
                 <button className="button" onClick={() => navigate('/admin/reservations/hotel')}>Ver reservas por Hotel</button>
                 <button className="button" onClick={() => navigate('/admin/reservations/user')}>Ver reservas por usuario</button>
             </div>
