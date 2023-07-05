@@ -9,6 +9,7 @@ type Hotel struct {
 	StreetNumber int       `gorm:"type:int"`
 	Rate         float64   `gorm:"type:decimal(8,2); not null"`
 	Amenities    Amenities `gorm:"many2many:hotel_amenities;"`
+	Images       Images
 }
 
 type Hotels []Hotel

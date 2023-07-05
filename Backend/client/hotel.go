@@ -21,7 +21,7 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 func GetHotelById(id int) model.Hotel {
 	var hotel model.Hotel
 
-	Db.Where("id = ?", id).Preload("Amenities").First(&hotel)
+	Db.Where("id = ?", id).Preload("Amenities").Preload("Images").First(&hotel)
 	log.Debug("Hotel: ", hotel)
 
 	return hotel
@@ -29,7 +29,7 @@ func GetHotelById(id int) model.Hotel {
 
 func GetHotels() model.Hotels {
 	var hotels model.Hotels
-	Db.Find(&hotels)
+	Db.Preload("Images").Find(&hotels)
 
 	log.Debug("Hotels: ", hotels)
 

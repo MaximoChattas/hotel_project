@@ -186,6 +186,15 @@ func (s *service) GetHotels() (dto.HotelsDto, error) {
 		hotelDto.StreetNumber = hotel.StreetNumber
 		hotelDto.Rate = hotel.Rate
 
+		for _, image := range hotel.Images {
+			var imageDto dto.ImageDto
+			imageDto.Id = image.Id
+			imageDto.Path = image.Path
+			imageDto.HotelId = image.HotelId
+
+			hotelDto.Images = append(hotelDto.Images, imageDto)
+		}
+
 		hotelsDto = append(hotelsDto, hotelDto)
 	}
 
@@ -210,6 +219,15 @@ func (s *service) GetHotelById(id int) (dto.HotelDto, error) {
 
 	for _, amenity := range hotel.Amenities {
 		hotelDto.Amenities = append(hotelDto.Amenities, amenity.Name)
+	}
+
+	for _, image := range hotel.Images {
+		var imageDto dto.ImageDto
+		imageDto.Id = image.Id
+		imageDto.Path = image.Path
+		imageDto.HotelId = image.HotelId
+
+		hotelDto.Images = append(hotelDto.Images, imageDto)
 	}
 
 	return hotelDto, nil

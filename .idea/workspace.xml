@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91ea1ab9-7101-4444-b95d-47d970800ea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backend/controller/image.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/app/url_mappings.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/url_mappings.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/client/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/client/image.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/db/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/db/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/dto/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/dto/image.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/client/hotel.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/client/hotel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/dto/hotel.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/dto/hotel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/model/hotel.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/model/hotel.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
