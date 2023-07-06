@@ -513,6 +513,15 @@ func (s *service) CheckAllAvailability(startDate string, endDate string) (dto.Ho
 			hotelDto.Rate = hotel.Rate
 			hotelDto.Description = hotel.Description
 
+			for _, image := range hotel.Images {
+				var imageDto dto.ImageDto
+				imageDto.Id = image.Id
+				imageDto.Path = image.Path
+				imageDto.HotelId = image.HotelId
+
+				hotelDto.Images = append(hotelDto.Images, imageDto)
+			}
+
 			hotelsAvailable = append(hotelsAvailable, hotelDto)
 		}
 	}
