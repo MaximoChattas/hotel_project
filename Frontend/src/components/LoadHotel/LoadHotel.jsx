@@ -11,13 +11,18 @@ function LoadHotel() {
     const [room_amount, setRoom_amount] = useState('');
     const [rate, setRate] = useState('');
     const [description, setDescription] = useState('');
+    const [amenities, setAmenities] = useState([]);
+    const [selectedAmenities, setSelectedAmenities] = useState([]);
+    const [images, setImages] = useState([]);
+
+    const [hotelId, setHotelId] = useState('');
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const { loggedIn } = useContext(LoginContext);
     const { userProfile } = useContext(UserProfileContext);
 
     const [error, setError] = useState('');
-    const [amenities, setAmenities] = useState([]);
-    const [selectedAmenities, setSelectedAmenities] = useState([]);
+
     const navigate = useNavigate();
 
     const handleLoadHotel = async (e) => {
@@ -46,11 +51,40 @@ function LoadHotel() {
             });
 
             if (response.status === 201) {
-                navigate('/');
+                setIsLoaded(true);
+                const data = await response.json();
+                setHotelId(data.id);
+
             } else {
                 const data = await response.json();
                 const errorMessage = data.error || 'Error';
                 throw new Error(errorMessage);
+            }
+        } catch (error) {
+            console.error(error);
+            setError(error.message);
+        }
+    };
+
+    const handleImagesUpload = async (e) => {
+        e.preventDefault();
+
+        try {
+            const formData = new FormData();
+            images.forEach((image) => {
+                formData.append('images', image);
+            });
+
+            const response = await fetch(`http://localhost:8090/hotel/${hotelId}/images`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                navigate('/')
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
             }
         } catch (error) {
             console.error(error);
@@ -86,6 +120,11 @@ function LoadHotel() {
         fetchAmenities();
     }, []);
 
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setImages(files);
+    };
+
     if (!loggedIn || userProfile.role !== 'Admin') {
         return (
             <>
@@ -98,16 +137,17 @@ function LoadHotel() {
     return (
         <>
             <Navbar />
-            <div className="contenedorLoad">
+            {!isLoaded &&
+                <div className="contenedorLoad">
                 <h2>Cargar Hotel</h2>
                 <form onSubmit={handleLoadHotel}>
                     <div>
                         <label>Nombre:</label>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                        <input type="text" disabled={isLoaded} value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
                     <div>
                         <label>Calle:</label>
-                        <input type="text" value={street_name} onChange={(e) => setStreet_name(e.target.value)} />
+                        <input type="text" disabled={isLoaded} value={street_name} onChange={(e) => setStreet_name(e.target.value)} />
                     </div>
                     <div>
                         <label>Altura:</label>
@@ -115,6 +155,7 @@ function LoadHotel() {
                             type="number"
                             pattern="[0-9]*"
                             value={street_number}
+                            disabled={isLoaded}
                             onChange={(e) => setStreet_number(e.target.value)}
                         />
                     </div>
@@ -124,12 +165,13 @@ function LoadHotel() {
                             type="number"
                             pattern="[0-9]*"
                             value={room_amount}
+                            disabled={isLoaded}
                             onChange={(e) => setRoom_amount(e.target.value)}
                         />
                     </div>
                     <div>
                         <label>Tarifa: $</label>
-                        <input type="number" pattern="[0-9]*" value={rate} onChange={(e) => setRate(e.target.value)} />
+                        <input type="number" disabled={isLoaded} pattern="[0-9]*" value={rate} onChange={(e) => setRate(e.target.value)} />
                     </div>
                     <div>
                         <label>Descripción:</label>
@@ -137,6 +179,7 @@ function LoadHotel() {
               <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  disabled={isLoaded}
                   placeholder="Ingrese la descripción"
                   maxLength={1000}
                   rows={4}
@@ -156,6 +199,7 @@ function LoadHotel() {
                                     type="checkbox"
                                     value={amenity.name}
                                     name="amenities"
+                                    disabled={isLoaded}
                                     onChange={(e) => handleAmenityChange(e, amenity.name)}
                                 />
                                 <span>{amenity.name}</span>
@@ -164,9 +208,28 @@ function LoadHotel() {
                     </div>
                     }
                     {error && <p className="error-message">{error}</p>}
-                    <button type="submit">Cargar Hotel</button>
+                    <button type="submit" disabled={isLoaded}>
+                        {isLoaded ? 'Guardado' : 'Cargar Hotel'}
+                    </button>
                 </form>
-            </div>
+            </div>}
+
+            {isLoaded &&
+                <div className="contenedorLoad">
+                    <h2>Cargar Imagenes</h2>
+                    <form onSubmit={handleImagesUpload}>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            disabled={!isLoaded}
+                            onChange={handleImageChange}
+                        />
+                        <button type="submit" disabled={!isLoaded}>
+                            Cargar Imagenes
+                        </button>
+                    </form>
+                </div>}
         </>
     );
 }
