@@ -49,14 +49,14 @@ const HotelDetails = () => {
     return <div>Loading...</div>;
   }
 
-  if (!loggedIn) {
-    return (
-      <>
-        <Navbar />
-        <p>No puedes acceder a este sitio.</p>
-      </>
-    );
-  }
+  // if (!loggedIn) {
+  //   return (
+  //     <>
+  //       <Navbar />
+  //       <p className="fullscreen">No puedes acceder a este sitio.</p>
+  //     </>
+  //   );
+  // }
 
   return (
     <>
@@ -113,7 +113,7 @@ const HotelDetails = () => {
             </div>
         )}
 
-        {userProfile.role === "Customer" && (
+        {userProfile && userProfile.role === "Customer" && (
           <div>
             <h2>Reservar</h2>
             <Calendar onSelectDates={handleSelectDates} />

@@ -61,14 +61,9 @@ const HotelList = () => {
                     <img className="card-img-top" alt={`Image for ${hotel.name}`} src={`http://localhost:8090/image/${hotel.images[0].id}`}/>}
               <div className="card-body">
                 <h5 className="card-title">
-                  {loggedIn ? (
                     <Link to={`/hotel/${hotel.id}`}>
-                    {hotel.name}
+                        {hotel.name}
                     </Link>
-                  ) : 
-                  <Link to={`/login`}>
-                    {hotel.name}
-                    </Link>}
                 </h5>
                 <p className="card-text">
                   Dirección: {hotel.street_name} {hotel.street_number}

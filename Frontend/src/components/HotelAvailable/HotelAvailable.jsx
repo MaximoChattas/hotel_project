@@ -90,11 +90,9 @@ const HotelAvailable = () => {
                   />}
               <div className="card-body">
                 <h5 className="card-title">
-                  {loggedIn ? (
-                    <Link to={`/hotel/${hotel.id}`}>{hotel.name}</Link>
-                  ) : (
-                    <Link to={`/login`}>{hotel.name}</Link>
-                  )}
+                  <Link to={`/hotel/${hotel.id}`}>
+                    {hotel.name}
+                  </Link>
                 </h5>
                 <p className="card-text">
                   Dirección: {hotel.street_name} {hotel.street_number}
