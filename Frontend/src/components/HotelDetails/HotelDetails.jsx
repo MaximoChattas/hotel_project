@@ -10,6 +10,7 @@ const HotelDetails = () => {
   const { id } = useParams();
   const [hotel, setHotel] = useState(null);
   const [error, setError] = useState(null);
+  const [index, setIndex] = useState(0)
   const { userProfile } = useContext(UserProfileContext);
   const { loggedIn } = useContext(LoginContext);
   const [selectedDates, setSelectedDates] = useState({
@@ -60,11 +61,45 @@ const HotelDetails = () => {
   return (
     <>
       <Navbar />
-      <div className="descripcion">
+      <div className="description">
         <h1>{hotel.name}</h1>
-        <h3>
+        <h4>
           {hotel.street_name} {hotel.street_number}
-        </h3>
+        </h4>
+        {hotel.images &&
+        <div className="carousel-container">
+          <div id={`carousel-${hotel.id}`} className="carousel slide" data-bs-ride="carousel">
+            <div className="carousel-inner">
+              {hotel.images.map((image) => (
+                  <div key={image.id} className={`carousel-item ${image.id === hotel.images[index].id ? 'active' : ''}`}>
+                    <img
+                        src={`http://localhost:8090/image/${image.id}`}
+                        className="d-block w-100 carousel-img"
+                        alt={image.id}
+                    />
+                  </div>
+              ))}
+            </div>
+            <button className="carousel-control-prev"
+                    type="button"
+                    data-bs-target={`#carousel-${hotel.id}`}
+                    data-bs-slide="prev"
+                    onClick={() => setIndex(prevIndex => (prevIndex === 0 ? hotel.images.length - 1 : prevIndex - 1))}>
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button className="carousel-control-next"
+                    type="button"
+                    data-bs-target={`#carousel-${hotel.id}`}
+                    data-bs-slide="next"
+                    onClick={() => setIndex(prevIndex => (prevIndex === hotel.images.length - 1 ? 0 : prevIndex + 1))}>
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        }
+
         <p>{hotel.description}</p>
         <h5>Precio por noche: ${hotel.rate}</h5>
         {hotel.amenities && (
