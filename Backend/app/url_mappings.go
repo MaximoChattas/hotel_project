@@ -27,6 +27,8 @@ func mapUrls() {
 	router.POST("/amenity", controller.InsertAmenity)
 	router.GET("/amenity", controller.GetAmenities)
 
+	router.GET("/image/:id", controller.GetImageById)
+
 	router.POST("/login", controller.UserLogin)
 
 	router.GET("/availability", controller.CheckAllAvailability)

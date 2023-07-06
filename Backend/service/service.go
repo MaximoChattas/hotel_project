@@ -36,6 +36,7 @@ type serviceInterface interface {
 	CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error)
 
 	InsertImages(imagesDto dto.ImagesDto) (dto.ImagesDto, error)
+	GetImageById(id int) (dto.ImageDto, error)
 }
 
 var (
@@ -547,4 +548,21 @@ func (s *service) InsertImages(imagesDto dto.ImagesDto) (dto.ImagesDto, error) {
 	}
 
 	return imagesDto, nil
+}
+
+func (s *service) GetImageById(id int) (dto.ImageDto, error) {
+	var image model.Image
+	var imageDto dto.ImageDto
+
+	image = client.GetImageById(id)
+
+	if image.Id == 0 {
+		return imageDto, errors.New("image not found")
+	}
+
+	imageDto.Id = image.Id
+	imageDto.Path = image.Path
+	imageDto.HotelId = image.HotelId
+
+	return imageDto, nil
 }

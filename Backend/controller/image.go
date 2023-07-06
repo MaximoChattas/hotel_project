@@ -3,7 +3,9 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io"
 	"net/http"
+	"os"
 	"path"
 	"project/dto"
 	"project/service"
@@ -45,4 +47,36 @@ func InsertImages(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, imagesDto)
+}
+
+func GetImageById(c *gin.Context) {
+	var imageDto dto.ImageDto
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	imageDto, err := service.Service.GetImageById(id)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	filePath := "../" + imageDto.Path
+
+	file, err := os.Open(filePath)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	defer file.Close()
+
+	c.Header("Content-Type", "image/jpg")
+
+	_, err = io.Copy(c.Writer, file)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 }
