@@ -187,11 +187,11 @@ func (s *service) GetHotels() (dto.HotelsDto, error) {
 		hotelDto.StreetNumber = hotel.StreetNumber
 		hotelDto.Rate = hotel.Rate
 
-		for _, image := range hotel.Images {
+		if len(hotel.Images) > 0 {
 			var imageDto dto.ImageDto
-			imageDto.Id = image.Id
-			imageDto.Path = image.Path
-			imageDto.HotelId = image.HotelId
+			imageDto.Id = hotel.Images[0].Id
+			imageDto.Path = hotel.Images[0].Path
+			imageDto.HotelId = hotel.Images[0].HotelId
 
 			hotelDto.Images = append(hotelDto.Images, imageDto)
 		}
@@ -513,11 +513,11 @@ func (s *service) CheckAllAvailability(startDate string, endDate string) (dto.Ho
 			hotelDto.Rate = hotel.Rate
 			hotelDto.Description = hotel.Description
 
-			for _, image := range hotel.Images {
+			if len(hotel.Images) > 0 {
 				var imageDto dto.ImageDto
-				imageDto.Id = image.Id
-				imageDto.Path = image.Path
-				imageDto.HotelId = image.HotelId
+				imageDto.Id = hotel.Images[0].Id
+				imageDto.Path = hotel.Images[0].Path
+				imageDto.HotelId = hotel.Images[0].HotelId
 
 				hotelDto.Images = append(hotelDto.Images, imageDto)
 			}
