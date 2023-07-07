@@ -39,7 +39,7 @@ func InsertImages(c *gin.Context) {
 		imagesDto = append(imagesDto, imageDTO)
 	}
 
-	imagesDto, err := service.Service.InsertImages(imagesDto)
+	imagesDto, err := service.ImageService.InsertImages(imagesDto)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -53,7 +53,7 @@ func GetImageById(c *gin.Context) {
 	var imageDto dto.ImageDto
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	imageDto, err := service.Service.GetImageById(id)
+	imageDto, err := service.ImageService.GetImageById(id)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})

@@ -22,7 +22,7 @@ func InsertUser(c *gin.Context) {
 		return
 	}
 
-	userDto, er := service.Service.InsertUser(userDto)
+	userDto, er := service.UserService.InsertUser(userDto)
 
 	if er != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": er.Error()})
@@ -37,7 +37,7 @@ func GetUserById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var userDto dto.UserDto
 
-	userDto, err := service.Service.GetUserById(id)
+	userDto, err := service.UserService.GetUserById(id)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -50,7 +50,7 @@ func GetUsers(c *gin.Context) {
 
 	var usersDto dto.UsersDto
 
-	usersDto, err := service.Service.GetUsers()
+	usersDto, err := service.UserService.GetUsers()
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -70,7 +70,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	loginDto, er := service.Service.UserLogin(loginDto)
+	loginDto, er := service.UserService.UserLogin(loginDto)
 	if er != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": er.Error()})
 		return
@@ -84,8 +84,8 @@ func UserLogin(c *gin.Context) {
 	}
 
 	response := struct {
-		Token string        `json:"token"`
-		User  dto.UserDto   `json:"user"`
+		Token string      `json:"token"`
+		User  dto.UserDto `json:"user"`
 	}{
 		Token: token,
 		User:  loginDto,

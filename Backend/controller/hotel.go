@@ -20,7 +20,7 @@ func InsertHotel(c *gin.Context) {
 		return
 	}
 
-	userDto, er := service.Service.InsertHotel(hotelDto)
+	userDto, er := service.HotelService.InsertHotel(hotelDto)
 
 	if er != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": er.Error()})
@@ -35,7 +35,7 @@ func GetHotelById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var hotelDto dto.HotelDto
 
-	hotelDto, err := service.Service.GetHotelById(id)
+	hotelDto, err := service.HotelService.GetHotelById(id)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -48,7 +48,7 @@ func GetHotels(c *gin.Context) {
 
 	var hotelsDto dto.HotelsDto
 
-	hotelsDto, err := service.Service.GetHotels()
+	hotelsDto, err := service.HotelService.GetHotels()
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -65,7 +65,7 @@ func CheckAllAvailability(c *gin.Context) {
 	startDate := c.Query("start_date")
 	endDate := c.Query("end_date")
 
-	hotelsDto, err := service.Service.CheckAllAvailability(startDate, endDate)
+	hotelsDto, err := service.HotelService.CheckAllAvailability(startDate, endDate)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

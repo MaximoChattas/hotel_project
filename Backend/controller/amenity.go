@@ -19,7 +19,7 @@ func InsertAmenity(c *gin.Context) {
 		return
 	}
 
-	amenityDto, er := service.Service.InsertAmenity(amenityDto)
+	amenityDto, er := service.AmenityService.InsertAmenity(amenityDto)
 
 	if er != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": er.Error()})
@@ -33,7 +33,7 @@ func GetAmenities(c *gin.Context) {
 
 	var amenitiesDto dto.AmenitiesDto
 
-	amenitiesDto, err := service.Service.GetAmenities()
+	amenitiesDto, err := service.AmenityService.GetAmenities()
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
