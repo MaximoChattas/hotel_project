@@ -2,49 +2,54 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/suite"
 	"net/http"
 	"net/http/httptest"
-	"project/db"
 	"project/dto"
-	"project/model"
+	"project/service"
 	"strings"
 	"testing"
+	"time"
 )
 
-//REMEMBER TO CHANGE DB CONNECTION BEFORE EXECUTING TESTS
-//db_name: miranda_test
-//THESE TEST CLEAR THE "hotels" TABLE
+type TestHotel struct{}
 
-type TestSuiteEnv struct {
-	suite.Suite
-	DB *gorm.DB
+func init() {
+	service.HotelService = &TestHotel{}
 }
 
-// Running before all tests are completed
-func (suite *TestSuiteEnv) SetupSuite() {
-	db.StartDbEngine()
-	suite.DB = db.Db
+func (t TestHotel) GetHotelById(id int) (dto.HotelDto, error) {
 
-	db.Db.Delete(&model.Hotel{})
-	db.Db.DropTable(&model.Hotel{})
-	db.Db.AutoMigrate(&model.Hotel{})
+	if id > 10 {
+		return dto.HotelDto{}, errors.New("hotel not found")
+	}
+
+	return dto.HotelDto{}, nil
 }
 
-// Running after all tests are completed
-func (suite *TestSuiteEnv) TearDownSuite() {
-	db.Db.Delete(&model.Hotel{})
-	db.Db.DropTable(&model.Hotel{})
-	db.Db.AutoMigrate(&model.Hotel{})
-	suite.DB.Close()
+func (t TestHotel) GetHotels() (dto.HotelsDto, error) {
+	return dto.HotelsDto{}, nil
 }
 
-func TestSuite(t *testing.T) {
-	suite.Run(t, new(TestSuiteEnv))
+func (t TestHotel) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
+	return hotelDto, nil
+}
+
+func (t TestHotel) CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool {
+	return true
+}
+
+func (t TestHotel) CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error) {
+	reservationStart, _ := time.Parse("02-01-2006 15:04", startDate)
+	reservationEnd, _ := time.Parse("02-01-2006 15:04", endDate)
+
+	if reservationStart.After(reservationEnd) {
+		return dto.HotelsDto{}, errors.New("a reservation cant end before it starts")
+	}
+	return dto.HotelsDto{}, nil
 }
 
 func TestInsertHotel(t *testing.T) {
@@ -54,6 +59,7 @@ func TestInsertHotel(t *testing.T) {
 	r.POST("/hotel", InsertHotel)
 
 	body := `{
+		"id": 1,
         "name": "Hotel Test",
         "room_amount": 10,
         "description": "Test hotel description",
@@ -136,9 +142,6 @@ func TestGetHotelById_Found(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	a.Equal(http.StatusOK, w.Code)
-
-	db.Db.DropTable(&model.Hotel{})
-	db.Db.AutoMigrate(&model.Hotel{})
 
 }
 

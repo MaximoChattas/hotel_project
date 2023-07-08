@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91ea1ab9-7101-4444-b95d-47d970800ea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backend/service/amenity.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/service/hotel.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/service/image.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/service/reservation.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/service/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controller/amenity.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controller/amenity.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controller/hotel.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controller/hotel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controller/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controller/image.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controller/reservation.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controller/reservation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controller/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/service/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/controller/hotel_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controller/hotel_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +54,64 @@
     ]
   }
 }</component>
+  <component name="RunManager" selected="Go Test.TestCheckAllAvailability in project/controller">
+    <configuration name="TestCheckAllAvailability in project/controller" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="hotel_project" />
+      <working_directory value="$PROJECT_DIR$/Backend/controller" />
+      <root_directory value="$PROJECT_DIR$/Backend" />
+      <kind value="PACKAGE" />
+      <package value="project/controller" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestCheckAllAvailability\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetHotelById_Found in project/controller" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="hotel_project" />
+      <working_directory value="$PROJECT_DIR$/Backend/controller" />
+      <root_directory value="$PROJECT_DIR$/Backend" />
+      <kind value="PACKAGE" />
+      <package value="project/controller" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGetHotelById_Found\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetHotelById_NotFound in project/controller" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="hotel_project" />
+      <working_directory value="$PROJECT_DIR$/Backend/controller" />
+      <root_directory value="$PROJECT_DIR$/Backend" />
+      <kind value="PACKAGE" />
+      <package value="project/controller" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGetHotelById_NotFound\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestInsertHotel in project/controller" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="hotel_project" />
+      <working_directory value="$PROJECT_DIR$/Backend/controller" />
+      <root_directory value="$PROJECT_DIR$/Backend" />
+      <kind value="PACKAGE" />
+      <package value="project/controller" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestInsertHotel\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestCheckAllAvailability in project/controller" />
+        <item itemvalue="Go Test.TestGetHotelById_Found in project/controller" />
+        <item itemvalue="Go Test.TestGetHotelById_NotFound in project/controller" />
+        <item itemvalue="Go Test.TestInsertHotel in project/controller" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
