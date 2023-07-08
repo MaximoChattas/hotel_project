@@ -45,7 +45,7 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) 
 
 	}
 
-	hotel = client.InsertHotel(hotel)
+	hotel = client.HotelClient.InsertHotel(hotel)
 
 	hotelDto.Id = hotel.Id
 
@@ -58,7 +58,7 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) 
 
 func (s *hotelService) GetHotels() (dto.HotelsDto, error) {
 
-	var hotels model.Hotels = client.GetHotels()
+	var hotels model.Hotels = client.HotelClient.GetHotels()
 	var hotelsDto dto.HotelsDto
 
 	for _, hotel := range hotels {
@@ -88,7 +88,7 @@ func (s *hotelService) GetHotels() (dto.HotelsDto, error) {
 
 func (s *hotelService) GetHotelById(id int) (dto.HotelDto, error) {
 
-	var hotel model.Hotel = client.GetHotelById(id)
+	var hotel model.Hotel = client.HotelClient.GetHotelById(id)
 	var hotelDto dto.HotelDto
 
 	if hotel.Id == 0 {
@@ -120,7 +120,7 @@ func (s *hotelService) GetHotelById(id int) (dto.HotelDto, error) {
 
 func (s *hotelService) CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool {
 
-	hotel := client.GetHotelById(hotelId)
+	hotel := client.HotelClient.GetHotelById(hotelId)
 	reservations := client.GetReservationsByHotel(hotelId)
 
 	roomsAvailable := hotel.RoomAmount
@@ -156,7 +156,7 @@ func (s *hotelService) CheckAllAvailability(startDate string, endDate string) (d
 		return hotelsAvailable, errors.New("a reservation cant end before it starts")
 	}
 
-	hotels := client.GetHotels()
+	hotels := client.HotelClient.GetHotels()
 
 	for _, hotel := range hotels {
 		if s.CheckAvailability(hotel.Id, reservationStart, reservationEnd) {

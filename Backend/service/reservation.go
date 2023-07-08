@@ -29,7 +29,7 @@ func init() {
 func (s *reservationService) InsertReservation(reservationDto dto.ReservationDto) (dto.ReservationDto, error) {
 
 	userDto := client.GetUserById(reservationDto.UserId)
-	hotelDto := client.GetHotelById(reservationDto.HotelId)
+	hotelDto := client.HotelClient.GetHotelById(reservationDto.HotelId)
 
 	if userDto.Id == 0 {
 		return reservationDto, errors.New("user not found")
@@ -188,7 +188,7 @@ func (s *reservationService) GetReservationsByUserRange(userId int, startDate st
 }
 
 func (s *reservationService) GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error) {
-	var hotel model.Hotel = client.GetHotelById(hotelId)
+	var hotel model.Hotel = client.HotelClient.GetHotelById(hotelId)
 	var hotelReservations dto.HotelReservationsDto
 	var reservationsDto dto.ReservationsDto
 

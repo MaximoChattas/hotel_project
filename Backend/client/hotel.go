@@ -5,7 +5,21 @@ import (
 	"project/model"
 )
 
-func InsertHotel(hotel model.Hotel) model.Hotel {
+type hotelClient struct{}
+
+type hotelClientInterface interface {
+	InsertHotel(hotel model.Hotel) model.Hotel
+	GetHotelById(id int) model.Hotel
+	GetHotels() model.Hotels
+}
+
+var HotelClient hotelClientInterface
+
+func init() {
+	HotelClient = &hotelClient{}
+}
+
+func (c hotelClient) InsertHotel(hotel model.Hotel) model.Hotel {
 
 	result := Db.Create(&hotel)
 
@@ -18,7 +32,7 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 	return hotel
 }
 
-func GetHotelById(id int) model.Hotel {
+func (c hotelClient) GetHotelById(id int) model.Hotel {
 	var hotel model.Hotel
 
 	Db.Where("id = ?", id).Preload("Amenities").Preload("Images").First(&hotel)
@@ -27,7 +41,7 @@ func GetHotelById(id int) model.Hotel {
 	return hotel
 }
 
-func GetHotels() model.Hotels {
+func (c hotelClient) GetHotels() model.Hotels {
 	var hotels model.Hotels
 	Db.Preload("Images").Find(&hotels)
 
