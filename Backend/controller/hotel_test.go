@@ -89,7 +89,7 @@ func TestInsertHotel(t *testing.T) {
 		log.Fatalf("Failed to unmarshal response: %v", err)
 	}
 
-	a.NotEqual(0, response.Id)
+	a.NotZero(t, response.Id)
 }
 
 func TestGetHotelById_NotFound(t *testing.T) {
