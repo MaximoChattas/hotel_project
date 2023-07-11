@@ -169,5 +169,5 @@ func TestCheckAllAvailability(t *testing.T) {
 
 	expectedResponse := `{"error":"a reservation cant end before it starts"}`
 
-	a.Equal(w.Body.String(), expectedResponse)
+	a.Equal(expectedResponse, w.Body.String())
 }
