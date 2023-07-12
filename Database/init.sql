@@ -70,15 +70,15 @@ Las habitaciones de los huespedes ofrecen servicios como aire acondicionado, min
 Orfeo Hotel tiene recepcion abierta 24 horas, servicio de habitaciones y espacio para guardar el equipaje para que la estancia sea mas agradable. El establecimiento tambien cuenta con piscina y desayuno incluido. Si vas a en coche a Orfeo Suites Hotel,
 hay parking gratis disponible.', 'Rodriguez del Busto', 4086, 46301.99),
 
-('Laplace Hotel', 20, 'Moderno hotel tres estrellas de 1100 mts2 emplazado en el barrio Villa Belgrano sobre la Av. Pedro Simón Laplace , una zona residencial unica por su belleza y encanto en la ciudad de Cordoba – Argentina.
-Su diseño fue inspirado en la satisfaccion del visitante, equipando a sus 20 habitaciones con la ultima tecnologia.', 'Av. Simon Laplace', 5355, 41870.00),
+('Laplace Hotel', 20, 'Moderno hotel tres estrellas de 1100 mts2 emplazado en el barrio Villa Belgrano sobre la Av. Pedro Simon Laplace , una zona residencial unica por su belleza y encanto en la ciudad de Cordoba - Argentina.
+Su diseno fue inspirado en la satisfaccion del visitante, equipando a sus 20 habitaciones con la ultima tecnologia.', 'Av. Simon Laplace', 5355, 41870.00),
 
-('Howard Johnson', 25, '¿Buscas donde alojarte en Cordoba? Entonces no te pierdas Howard Johnson Hotel Cordoba, un hotel de moda que te acerca a lo mejor de Córdoba.
+('Howard Johnson', 25, 'Buscas donde alojarte en Cordoba? Entonces no te pierdas Howard Johnson Hotel Cordoba, un hotel de moda que te acerca a lo mejor de Cordoba.
 
 Para que te sientas como en casa, las habitaciones en el hotel incluyen televisor de pantalla plana, minibar y aire acondicionado, y mantenerte conectado es facil, ya que hay wifi gratuito disponible.
 
-Los huespedes tienen acceso a recepción abierta 24 horas, servicio de habitaciones y conserje durante su estancia en Howard Johnson La Canada Hotel. Ademas, Howard Johnson La Canada Hotel ofrece piscina en la azotea y desayuno incluido,
-lo que hara tu viaje a Cordoba incluso más gratificante.', 'Pte J Figueroa Alcorta', 20, 54230.00);
+Los huespedes tienen acceso a recepcion abierta 24 horas, servicio de habitaciones y conserje durante su estancia en Howard Johnson La Canada Hotel. Ademas, Howard Johnson La Canada Hotel ofrece piscina en la azotea y desayuno incluido,
+lo que hara tu viaje a Cordoba incluso mas gratificante.', 'Pte J Figueroa Alcorta', 20, 54230.00);
 
 
 INSERT INTO users (name, last_name, dni, email, password, role) VALUES
