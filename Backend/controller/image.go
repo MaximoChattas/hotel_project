@@ -27,7 +27,7 @@ func InsertImages(c *gin.Context) {
 		//Filename as [hotel_id]-[image_number].[file_extension]
 		fileName := fmt.Sprintf("%d-%d%s", id, i+1, fileExt)
 
-		if err := c.SaveUploadedFile(file, "../Images/"+fileName); err != nil {
+		if err := c.SaveUploadedFile(file, "Images/"+fileName); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
 			return
 		}
@@ -60,7 +60,7 @@ func GetImageById(c *gin.Context) {
 		return
 	}
 
-	filePath := "../" + imageDto.Path
+	filePath := imageDto.Path
 
 	file, err := os.Open(filePath)
 

@@ -16,10 +16,10 @@ var (
 
 func init() {
 	// DB Connections Paramters
-	DBName := ""
+	DBName := "miranda"
 	DBUser := "root"
-	DBPass := ""
-	DBHost := "localhost"
+	DBPass := "pass"
+	DBHost := "database"
 
 	Db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")
 
