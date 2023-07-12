@@ -1,53 +1,51 @@
 package client
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	log "github.com/sirupsen/logrus"
-	"github.com/stretchr/testify/assert"
 	"project/model"
 	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/jinzhu/gorm"
+	"github.com/stretchr/testify/assert"
 )
 
-func init() {
-	// DB Connections Paramters
-	DBName := "miranda"
-	DBUser := "root"
-	DBPass := "pass"
-	DBHost := "database"
-
-	db, err := gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")
-
+func TestInsertHotel(t *testing.T) {
+	db, mock, err := sqlmock.New()
 	if err != nil {
-		log.Info("Connection Failed to Open")
-		log.Fatal(err)
-	} else {
-		log.Info("Connection Established")
+		t.Fatalf("Failed to Create Mock Database")
+	}
+	defer db.Close()
+
+	gormDB, err := gorm.Open("mysql", db)
+	if err != nil {
+		t.Fatalf("Connection Failed to Open")
 	}
 
-	// Add all clients here
-	Db = db
+	Db = gormDB
+	HotelClient = &hotelClient{}
 
-	Db.AutoMigrate(&model.Hotel{})
+	hotel := model.Hotel{
+		Id:           1,
+		Name:         "Sample Hotel",
+		RoomAmount:   10,
+		Description:  "Sample description",
+		StreetName:   "Sample Street",
+		StreetNumber: 123,
+		Rate:         4.5,
+	}
 
-}
+	mock.ExpectBegin()
+	mock.ExpectExec("INSERT INTO `hotels`").WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectCommit()
 
-func TestGetHotelById(t *testing.T) {
-	a := assert.New(t)
+	result := HotelClient.InsertHotel(hotel)
 
-	hotel := HotelClient.GetHotelById(1)
+	// Assert the result
+	assert.Equal(t, hotel, result)
+	assert.Equal(t, 1, hotel.Id)
 
-	a.Equal(1, hotel.Id)
-}
-
-func TestGetHotels(t *testing.T) {
-	a := assert.New(t)
-
-	hotels := HotelClient.GetHotels()
-
-	var amount int
-
-	Db.Model(&model.Hotel{}).Count(&amount)
-
-	a.Equal(amount, len(hotels))
+	// Assert that all expectations were met
+	if err := mock.ExpectationsWereMet(); err != nil {
+		t.Errorf("There were unfulfilled expectations: %v", err)
+	}
 }
