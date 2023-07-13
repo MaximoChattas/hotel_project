@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     end_date VARCHAR(16) NOT NULL,
     user_id INT,
     hotel_id INT,
-    amount DECIMAL(8,2) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (hotel_id) REFERENCES hotels(id)
 );
