@@ -18,6 +18,7 @@ type reservationServiceInterface interface {
 	GetReservationsByUser(userId int) (dto.UserReservationsDto, error)
 	GetReservationsByUserRange(userId int, startDate string, endDate string) (dto.ReservationsDto, error)
 	GetReservationsByHotel(hotelId int) (dto.HotelReservationsDto, error)
+	DeleteReservation(id int) error
 }
 
 var ReservationService reservationServiceInterface
@@ -221,4 +222,20 @@ func (s *reservationService) GetReservationsByHotel(hotelId int) (dto.HotelReser
 	hotelReservations.Reservations = reservationsDto
 
 	return hotelReservations, nil
+}
+
+func (s *reservationService) DeleteReservation(id int) error {
+
+	reservation := client.GetReservationById(id)
+
+	reservationStart, _ := time.Parse("02-01-2006 15:04", reservation.StartDate)
+
+	if reservationStart.Before(time.Now().Add(-48 * time.Hour)) {
+		return errors.New("can't delete a reservation 48hs before it starts")
+	}
+
+	err := client.DeleteReservation(reservation)
+
+	return err
+
 }

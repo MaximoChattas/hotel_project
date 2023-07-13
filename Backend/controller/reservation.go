@@ -104,3 +104,16 @@ func GetReservationsByHotel(c *gin.Context) {
 	c.JSON(http.StatusOK, hotelReservations)
 
 }
+
+func DeleteReservation(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	err := service.ReservationService.DeleteReservation(id)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Reservation deleted"})
+}

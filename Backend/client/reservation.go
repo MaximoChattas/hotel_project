@@ -5,7 +5,6 @@ import (
 	"project/model"
 )
 
-
 func InsertReservation(reservation model.Reservation) model.Reservation {
 
 	result := Db.Create(&reservation)
@@ -53,4 +52,15 @@ func GetReservationsByHotel(hotelId int) model.Reservations {
 	log.Debug("Reservations: ", reservations)
 
 	return reservations
+}
+
+func DeleteReservation(reservation model.Reservation) error {
+	err := Db.Delete(&reservation).Error
+
+	if err != nil {
+		log.Debug("Reservation deleted: ", reservation.Id)
+	} else {
+		log.Debug("Failed to delete reservation")
+	}
+	return err
 }
