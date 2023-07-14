@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginContext, UserProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
-import Reserve from "../Reserve/Reserve";
+import "./UserDetails.css"
 import Navbar from "../NavBar/NavBar";
 
 const UserDetails = () => {
@@ -10,6 +11,7 @@ const UserDetails = () => {
   const [error, setError] = useState(null);
   const { loggedIn } = useContext(LoginContext);
   const { userProfile } = useContext(UserProfileContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -31,7 +33,12 @@ const UserDetails = () => {
   }, [id]);
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+        <>
+          <Navbar />
+          <p className="fullscreen">{error}</p>
+        </>
+    );
   }
 
   if (!user) {
@@ -42,22 +49,24 @@ const UserDetails = () => {
     return (
       <>
         <Navbar />
-        <p>No puedes acceder a este sitio.</p>
+        <p className="fullscreen">No puedes acceder a este sitio.</p>
       </>
     );
   }
 
   return (
     <>
-
       <Navbar />
-      <div className="UserDetalle">
-        <h1>Perfil de Usuario</h1>
-        <h2>{user.name} {user.last_name}</h2>
-        <p>Número de usuario: {user.id}</p>
+      <div className="UserDetail">
+        <h3>Perfil de Usuario</h3>
+        <p>Nombre: {user.name}</p>
+        <p>Apellido: {user.last_name}</p>
+        <p>DNI: {user.dni}</p>
         <p>Email: {user.email}</p>
+        <p>Número de usuario: {user.id}</p>
+        <button onClick={() => navigate(`/user/reservations/${user.id}`)}>Ver Reservas</button>
       </div>
-      </>
+    </>
   );
 };
 
