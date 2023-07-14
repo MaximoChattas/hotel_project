@@ -50,11 +50,11 @@ const UserReservations = () => {
     return <div>Loading...</div>;
   }
 
-  if (!loggedIn || (userReservations.user_id !== userProfile.id)) {
+  if (!loggedIn || ((userReservations.user_id !== userProfile.id) && (userProfile.role !== "Admin"))) {
     return (
         <>
             <Navbar />
-            <p>No puedes acceder a este sitio.</p>
+            <p className="fullscreen">No puedes acceder a este sitio.</p>
         </>
     )
    }

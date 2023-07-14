@@ -21,3 +21,7 @@
     align-content: center;
     max-width: 800px;
 }
+
+p {
+    font-size: 18px;
+}

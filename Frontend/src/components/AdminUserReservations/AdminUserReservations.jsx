@@ -50,7 +50,7 @@ const AdminUserReservations = () => {
     return (
       <>
         <Navbar />
-        <p>No puedes acceder a este sitio.</p>
+        <p className="fullscreen">No puedes acceder a este sitio.</p>
       </>
     );
   }
