@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS reservations (
     user_id INT,
     hotel_id INT,
     amount DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (hotel_id) REFERENCES hotels(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS amenities (
@@ -38,14 +38,15 @@ CREATE TABLE IF NOT EXISTS images (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     path VARCHAR(300) NOT NULL,
     hotel_id INT,
-    FOREIGN KEY (hotel_id) REFERENCES hotels(id)	
+    FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE	
 );
 
 CREATE TABLE IF NOT EXISTS hotel_amenities (
     hotel_id INT,
     amenity_id INT,
-    FOREIGN KEY (hotel_id) REFERENCES hotels(id),
-    FOREIGN KEY (amenity_id) REFERENCES amenities(id)
+    FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (amenity_id) REFERENCES amenities(id) ON DELETE CASCADE,
+    PRIMARY KEY (hotel_id, amenity_id)
 );
 
 INSERT INTO hotels (name, room_amount, description, street_name, street_number, rate) VALUES
