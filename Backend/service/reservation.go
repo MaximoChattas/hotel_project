@@ -228,6 +228,10 @@ func (s *reservationService) DeleteReservation(id int) error {
 
 	reservation := client.GetReservationById(id)
 
+	if reservation.Id == 0 {
+		return errors.New("reservation not found")
+	}
+
 	reservationStart, _ := time.Parse("02-01-2006 15:04", reservation.StartDate)
 
 	if reservationStart.Before(time.Now().Add(-48 * time.Hour)) {
