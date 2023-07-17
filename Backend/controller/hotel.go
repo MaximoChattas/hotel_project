@@ -74,3 +74,16 @@ func CheckAllAvailability(c *gin.Context) {
 
 	c.JSON(http.StatusOK, hotelsDto)
 }
+
+func DeleteHotel(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	err := service.HotelService.DeleteHotel(id)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Hotel deleted"})
+}

@@ -36,6 +36,10 @@ func (t TestHotel) GetHotels() model.Hotels {
 	return model.Hotels{}
 }
 
+func (t TestHotel) DeleteHotel(hotel model.Hotel) error {
+	return nil
+}
+
 func TestInsertHotelError(t *testing.T) {
 
 	a := assert.New(t)

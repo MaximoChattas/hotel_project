@@ -52,6 +52,10 @@ func (t TestHotel) CheckAllAvailability(startDate string, endDate string) (dto.H
 	return dto.HotelsDto{}, nil
 }
 
+func (t TestHotel) DeleteHotel(id int) error {
+	return nil
+}
+
 func TestInsertHotel(t *testing.T) {
 	a := assert.New(t)
 

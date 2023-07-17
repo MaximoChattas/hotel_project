@@ -16,6 +16,7 @@ type hotelServiceInterface interface {
 	InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, error)
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool
 	CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error)
+	DeleteHotel(id int) error
 }
 
 var HotelService hotelServiceInterface
@@ -183,4 +184,17 @@ func (s *hotelService) CheckAllAvailability(startDate string, endDate string) (d
 	}
 
 	return hotelsAvailable, nil
+}
+
+func (s *hotelService) DeleteHotel(id int) error {
+
+	hotel := client.HotelClient.GetHotelById(id)
+
+	if hotel.Id == 0 {
+		return errors.New("hotel not found")
+	}
+
+	err := client.HotelClient.DeleteHotel(hotel)
+
+	return err
 }

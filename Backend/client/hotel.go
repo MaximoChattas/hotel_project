@@ -11,6 +11,7 @@ type hotelClientInterface interface {
 	InsertHotel(hotel model.Hotel) model.Hotel
 	GetHotelById(id int) model.Hotel
 	GetHotels() model.Hotels
+	DeleteHotel(hotel model.Hotel) error
 }
 
 var HotelClient hotelClientInterface
@@ -48,4 +49,15 @@ func (c hotelClient) GetHotels() model.Hotels {
 	log.Debug("Hotels: ", hotels)
 
 	return hotels
+}
+
+func (c hotelClient) DeleteHotel(hotel model.Hotel) error {
+	err := Db.Delete(&hotel).Error
+
+	if err != nil {
+		log.Debug("Failed to delete hotel")
+	} else {
+		log.Debug("Hotel deleted: ", hotel.Id)
+	}
+	return err
 }
