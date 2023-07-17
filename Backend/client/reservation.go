@@ -58,9 +58,9 @@ func DeleteReservation(reservation model.Reservation) error {
 	err := Db.Delete(&reservation).Error
 
 	if err != nil {
-		log.Debug("Reservation deleted: ", reservation.Id)
-	} else {
 		log.Debug("Failed to delete reservation")
+	} else {
+		log.Debug("Reservation deleted: ", reservation.Id)
 	}
 	return err
 }
