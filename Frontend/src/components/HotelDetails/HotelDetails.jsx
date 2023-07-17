@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LoginContext, UserProfileContext } from '../../App';
-import {useParams} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
 import Calendar from "../Calendar/Calendar";
 import Reservation from "../Reserve/Reserve";
@@ -10,13 +10,15 @@ const HotelDetails = () => {
   const { id } = useParams();
   const [hotel, setHotel] = useState(null);
   const [error, setError] = useState(null);
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(0);
+  const [deleteError, setDeleteError] = useState(null);
   const { userProfile } = useContext(UserProfileContext);
   const { loggedIn } = useContext(LoginContext);
   const [selectedDates, setSelectedDates] = useState({
     startDate: new Date(),
     endDate: new Date(),
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
@@ -41,12 +43,38 @@ const HotelDetails = () => {
     setSelectedDates(selectedRange);
   };
 
+  const handleDeleteHotel = async () => {
+    try {
+      const response = await fetch(`http://localhost:8090/hotel/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        navigate(`/`)
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+    } catch (error) {
+      setDeleteError(error.message);
+    }
+  };
+
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+        <>
+          <Navbar />
+          <div className="fullscreen">Error: {error}</div>
+        </>
+    );
   }
 
   if (!hotel) {
-    return <div>Loading...</div>;
+    return (
+        <>
+          <Navbar />
+          <div className="fullscreen">Cargando...</div>
+        </>
+    );
   }
 
   // if (!loggedIn) {
@@ -124,6 +152,12 @@ const HotelDetails = () => {
               endDate={selectedDates.endDate}
             />
           </div>
+        )}
+        {userProfile && userProfile.role === "Admin" && (
+            <div>
+              <button onClick={handleDeleteHotel}>Borrar Hotel</button>
+              {deleteError && <p className="error-message">{deleteError}</p>}
+            </div>
         )}
       </div>
     </>
