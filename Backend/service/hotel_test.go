@@ -40,6 +40,10 @@ func (t TestHotel) DeleteHotel(hotel model.Hotel) error {
 	return nil
 }
 
+func (t TestHotel) UpdateHotel(hotel model.Hotel) model.Hotel {
+	return model.Hotel{}
+}
+
 func TestInsertHotelError(t *testing.T) {
 
 	a := assert.New(t)

@@ -56,6 +56,10 @@ func (t TestHotel) DeleteHotel(id int) error {
 	return nil
 }
 
+func (t TestHotel) UpdateHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
+	return dto.HotelDto{}, nil
+}
+
 func TestInsertHotel(t *testing.T) {
 	a := assert.New(t)
 
