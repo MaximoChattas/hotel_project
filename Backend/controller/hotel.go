@@ -20,14 +20,14 @@ func InsertHotel(c *gin.Context) {
 		return
 	}
 
-	userDto, er := service.HotelService.InsertHotel(hotelDto)
+	hotelDto, er := service.HotelService.InsertHotel(hotelDto)
 
 	if er != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": er.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, userDto)
+	c.JSON(http.StatusCreated, hotelDto)
 }
 
 func GetHotelById(c *gin.Context) {
@@ -86,4 +86,27 @@ func DeleteHotel(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Hotel deleted"})
+}
+
+func UpdateHotel(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	var hotelDto dto.HotelDto
+	err := c.BindJSON(&hotelDto)
+
+	if err != nil {
+		log.Error(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	hotelDto.Id = id
+
+	hotelDto, err = service.HotelService.UpdateHotel(hotelDto)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, hotelDto)
 }

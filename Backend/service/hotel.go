@@ -17,6 +17,7 @@ type hotelServiceInterface interface {
 	CheckAvailability(hotelId int, startDate time.Time, endDate time.Time) bool
 	CheckAllAvailability(startDate string, endDate string) (dto.HotelsDto, error)
 	DeleteHotel(id int) error
+	UpdateHotel(hotelDto dto.HotelDto) (dto.HotelDto, error)
 }
 
 var HotelService hotelServiceInterface
@@ -197,4 +198,40 @@ func (s *hotelService) DeleteHotel(id int) error {
 	err := client.HotelClient.DeleteHotel(hotel)
 
 	return err
+}
+
+func (s *hotelService) UpdateHotel(hotelDto dto.HotelDto) (dto.HotelDto, error) {
+
+	hotel := client.HotelClient.GetHotelById(hotelDto.Id)
+
+	if hotel.Id == 0 {
+		return hotelDto, errors.New("hotel not found")
+	}
+
+	hotel.Name = hotelDto.Name
+	hotel.StreetName = hotelDto.StreetName
+	hotel.StreetNumber = hotelDto.StreetNumber
+	hotel.Rate = hotelDto.Rate
+	hotel.Description = hotelDto.Description
+	hotel.RoomAmount = hotelDto.RoomAmount
+	hotel.Amenities = model.Amenities{}
+
+	for _, amenityName := range hotelDto.Amenities {
+		amenity := client.GetAmenityByName(amenityName)
+
+		if amenity.Id == 0 {
+			return hotelDto, errors.New("amenity not found")
+		}
+
+		hotel.Amenities = append(hotel.Amenities, amenity)
+	}
+
+	hotel = client.HotelClient.UpdateHotel(hotel)
+
+	if hotel.Id == 0 {
+		return hotelDto, errors.New("error updating hotel")
+	}
+
+	return hotelDto, nil
+
 }

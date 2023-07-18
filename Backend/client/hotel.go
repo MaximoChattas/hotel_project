@@ -12,6 +12,7 @@ type hotelClientInterface interface {
 	GetHotelById(id int) model.Hotel
 	GetHotels() model.Hotels
 	DeleteHotel(hotel model.Hotel) error
+	UpdateHotel(hotel model.Hotel) model.Hotel
 }
 
 var HotelClient hotelClientInterface
@@ -60,4 +61,26 @@ func (c hotelClient) DeleteHotel(hotel model.Hotel) error {
 		log.Debug("Hotel deleted: ", hotel.Id)
 	}
 	return err
+}
+
+func (c hotelClient) UpdateHotel(hotel model.Hotel) model.Hotel {
+
+	//Db.Model(&hotel).Association("Amenities").Clear()
+
+	var newAmenities model.Amenities
+
+	for _, amenity := range hotel.Amenities {
+		newAmenities = append(newAmenities, amenity)
+	}
+	result := Db.Save(&hotel)
+
+	Db.Model(&hotel).Association("Amenities").Replace(newAmenities)
+
+	if result.Error != nil {
+		log.Debug("Failed to update hotel")
+		return model.Hotel{}
+	}
+
+	log.Debug("Updated hotel: ", hotel.Id)
+	return hotel
 }
