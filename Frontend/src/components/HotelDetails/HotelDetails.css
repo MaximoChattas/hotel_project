@@ -26,6 +26,6 @@ p {
     font-size: 18px;
 }
 
-.description button {
+.description .admin-button {
     margin: 10px;
 }

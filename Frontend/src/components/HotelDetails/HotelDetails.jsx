@@ -155,8 +155,8 @@ const HotelDetails = () => {
         )}
         {userProfile && userProfile.role === "Admin" && (
             <div>
-              <button onClick={() => navigate(`/updatehotel/${id}`)}>Modificar Hotel</button>
-              <button onClick={handleDeleteHotel}>Borrar Hotel</button>
+              <button className="admin-button" onClick={() => navigate(`/updatehotel/${id}`)}>Modificar Hotel</button>
+              <button className="admin-button" onClick={handleDeleteHotel}>Borrar Hotel</button>
               {deleteError && <p className="error-message">{deleteError}</p>}
             </div>
         )}
