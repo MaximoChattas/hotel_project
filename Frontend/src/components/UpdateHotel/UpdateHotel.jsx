@@ -115,14 +115,14 @@ function UpdateHotel() {
         fetchAmenities();
     }, []);
 
-    // if (!loggedIn || userProfile.role !== 'Admin') {
-    //     return (
-    //         <>
-    //             <Navbar />
-    //             <p className="contenedorLoad">No puedes acceder a este sitio.</p>
-    //         </>
-    //     );
-    // }
+    if (!loggedIn || userProfile.role !== 'Admin') {
+        return (
+            <>
+                <Navbar />
+                <p className="contenedorLoad">No puedes acceder a este sitio.</p>
+            </>
+        );
+    }
 
     return (
         <>
