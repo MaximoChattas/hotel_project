@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS hotels (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(300) NOT NULL,
-    room_amount INT NOT NULL,
+    room_amount INT NOT NULL CHECK(room_amount > 0),
     description VARCHAR(1000),
     street_name VARCHAR(100) NOT NULL,
-    street_number INT NOT NULL,
-    rate DECIMAL(8,2) NOT NULL
+    street_number INT NOT NULL CHECK(street_number > 0),
+    rate DECIMAL(8,2) NOT NULL CHECK(rate > 0)
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     end_date VARCHAR(16) NOT NULL,
     user_id INT,
     hotel_id INT,
-    amount DECIMAL(10,2) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL CHECK(amount > 0),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE
 );
