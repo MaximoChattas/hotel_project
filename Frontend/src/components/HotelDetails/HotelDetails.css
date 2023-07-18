@@ -25,3 +25,7 @@
 p {
     font-size: 18px;
 }
+
+.description button {
+    margin: 10px;
+}
