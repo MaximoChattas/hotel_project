@@ -6,8 +6,11 @@ services:
     environment:
       MYSQL_DATABASE: miranda
       MYSQL_ROOT_PASSWORD: pass
+      MYSQL_TCP_PORT: 3307
     ports:
       - "3307:3306"
+    expose:
+      - 3307
     volumes:
       - ./Database:/docker-entrypoint-initdb.d
     healthcheck:
